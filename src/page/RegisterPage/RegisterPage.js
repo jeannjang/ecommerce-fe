@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { registerUser, clearErrors } from "../../features/user/userSlice";
 
 import "./style/register.style.css";
-
-import { registerUser } from "../../features/user/userSlice";
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
@@ -23,10 +22,12 @@ const RegisterPage = () => {
 
   const register = (event) => {
     event.preventDefault();
+    dispatch(clearErrors());
+
     const { name, email, password, confirmPassword, policy } = formData;
     const checkConfirmPassword = password === confirmPassword;
     if (!checkConfirmPassword) {
-      setPasswordError("비밀번호 중복확인이 일치하지 않습니다.");
+      setPasswordError("Passwords do not match");
       return;
     }
     if (!policy) {
@@ -35,6 +36,7 @@ const RegisterPage = () => {
     }
     setPasswordError("");
     setPolicyError(false);
+
     dispatch(registerUser({ name, email, password, navigate }));
   };
 
@@ -61,41 +63,41 @@ const RegisterPage = () => {
       )}
       <Form onSubmit={register}>
         <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
+          <Form.Label>E-MAIL</Form.Label>
           <Form.Control
             type="email"
             id="email"
-            placeholder="Enter email"
+            placeholder="E-MAIL"
             onChange={handleChange}
             required
           />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Name</Form.Label>
+          <Form.Label>NAME</Form.Label>
           <Form.Control
             type="text"
             id="name"
-            placeholder="Enter name"
+            placeholder="NAME"
             onChange={handleChange}
             required
           />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>PASSWORD</Form.Label>
           <Form.Control
             type="password"
             id="password"
-            placeholder="Password"
+            placeholder="PASSWORD"
             onChange={handleChange}
             required
           />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Confirm Password</Form.Label>
+          <Form.Label>CONFIRM PASSWORD</Form.Label>
           <Form.Control
             type="password"
             id="confirmPassword"
-            placeholder="Confirm Password"
+            placeholder="CONFIRM PASSWORD"
             onChange={handleChange}
             required
             isInvalid={passwordError}
@@ -107,14 +109,15 @@ const RegisterPage = () => {
         <Form.Group className="mb-3">
           <Form.Check
             type="checkbox"
-            label="이용약관에 동의합니다"
+            label="I agree to all terms"
             id="policy"
             onChange={handleChange}
             isInvalid={policyError}
+            checked={formData.policy}
           />
         </Form.Group>
         <Button variant="danger" type="submit">
-          회원가입
+          SIGN UP
         </Button>
       </Form>
     </Container>
