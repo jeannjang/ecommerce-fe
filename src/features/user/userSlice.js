@@ -5,7 +5,20 @@ import { initialCart } from "../cart/cartSlice";
 
 export const loginWithEmail = createAsyncThunk(
   "user/loginWithEmail",
-  async ({ email, password }, { rejectWithValue }) => {}
+  async ({ email, password }, { rejectWithValue }) => {
+    try {
+      const response = await api.post("/auth/login", {
+        email,
+        password,
+      });
+      const { token, user } = response.data;
+      sessionStorage.setItem("authToken", token);
+
+      return user;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
 );
 
 export const loginWithGoogle = createAsyncThunk(
@@ -29,7 +42,7 @@ export const registerUser = createAsyncThunk(
 
       dispatch(
         showToastMessage({
-          message: "회원가입이 완료되었습니다",
+          message: "Sign up successful!",
           status: "success",
         })
       );
@@ -39,7 +52,8 @@ export const registerUser = createAsyncThunk(
     } catch (error) {
       dispatch(
         showToastMessage({
-          message: error.message || "회원가입에 실패했습니다",
+          message:
+            error.message || "Failed to create account. Please try again",
           status: "error",
         })
       );
@@ -80,6 +94,18 @@ const userSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
         state.registrationError = action.payload;
+      })
+      .addCase(loginWithEmail.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loginWithEmail.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.loginError = null;
+      })
+      .addCase(loginWithEmail.rejected, (state, action) => {
+        state.loading = false;
+        state.loginError = action.payload;
       });
   },
 });

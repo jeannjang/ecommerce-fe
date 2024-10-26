@@ -21,6 +21,7 @@ const Login = () => {
       dispatch(clearErrors());
     }
   }, [navigate]);
+
   const handleLoginWithEmail = (event) => {
     event.preventDefault();
     dispatch(loginWithEmail({ email, password }));
@@ -31,7 +32,7 @@ const Login = () => {
   };
 
   if (user) {
-    navigate("/");
+    navigate("/"); //로그인 성공시 홈으로 이동
   }
   return (
     <>
@@ -43,35 +44,35 @@ const Login = () => {
         )}
         <Form className="login-form" onSubmit={handleLoginWithEmail}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
+            <Form.Label>E-MAIL</Form.Label>
             <Form.Control
               type="email"
-              placeholder="Enter email"
+              placeholder="E-MAIL"
               required
               onChange={(event) => setEmail(event.target.value)}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
+            <Form.Label>PASSWORD</Form.Label>
             <Form.Control
               type="password"
-              placeholder="Password"
+              placeholder="PASSWORD"
               required
               onChange={(event) => setPassword(event.target.value)}
             />
           </Form.Group>
           <div className="display-space-between login-button-area">
             <Button variant="danger" type="submit">
-              Login
+              SIGN IN
             </Button>
             <div>
-              아직 계정이 없으세요?<Link to="/register">회원가입 하기</Link>{" "}
+              Need an account? <Link to="/register">SIGN UP</Link>{" "}
             </div>
           </div>
 
           <div className="text-align-center mt-2">
-            <p>-외부 계정으로 로그인하기-</p>
+            <p>-Sign in with social accounts-</p>
             <div className="display-center">
               <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
                 <GoogleLogin
