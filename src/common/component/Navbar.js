@@ -10,10 +10,11 @@ import {
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../features/user/userSlice";
+import { logoutUser } from "../../features/user/userSlice";
 
-const Navbar = ({ user }) => {
+const Navbar = () => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
   const { cartItemCount } = useSelector((state) => state.cart);
   const isMobile = window.navigator.userAgent.indexOf("Mobile") !== -1;
   const [showSearchBox, setShowSearchBox] = useState(false);
@@ -38,7 +39,7 @@ const Navbar = ({ user }) => {
     }
   };
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logoutUser());
   };
   return (
     <div>
