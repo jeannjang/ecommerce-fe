@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { registerUser, clearErrors } from "../../features/user/userSlice";
@@ -18,7 +19,10 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const [passwordError, setPasswordError] = useState("");
   const [policyError, setPolicyError] = useState(false);
-  const { registrationError } = useSelector((state) => state.user);
+
+  const { registrationError, loading: userSliceLoading } = useSelector(
+    (state) => state.user
+  );
 
   const register = (event) => {
     event.preventDefault();
@@ -116,8 +120,12 @@ const RegisterPage = () => {
             checked={formData.policy}
           />
         </Form.Group>
-        <Button variant="danger" type="submit">
-          SIGN UP
+        <Button variant="danger" type="submit" disabled={userSliceLoading}>
+          {userSliceLoading ? (
+            <Spinner animation="border" size="sm" />
+          ) : (
+            "SIGN UP"
+          )}
         </Button>
       </Form>
     </Container>
