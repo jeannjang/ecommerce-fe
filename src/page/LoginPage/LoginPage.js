@@ -7,12 +7,19 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import "./style/login.style.css";
 import { loginWithEmail, loginWithGoogle } from "../../features/user/userSlice";
 import { clearErrors } from "../../features/user/userSlice";
+import { size } from "@cloudinary/url-gen/qualifiers/textFit";
+import { type } from "@testing-library/user-event/dist/type";
+import { Spinner } from "react-bootstrap";
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, loginError } = useSelector((state) => state.user);
+  const {
+    user,
+    loginError,
+    loading: userSliceLoading,
+  } = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -63,8 +70,12 @@ const Login = () => {
             />
           </Form.Group>
           <div className="display-space-between login-button-area">
-            <Button variant="danger" type="submit">
-              SIGN IN
+            <Button variant="danger" type="submit" disabled={userSliceLoading}>
+              {userSliceLoading ? (
+                <Spinner animation="border" size="sm" />
+              ) : (
+                "SIGN IN"
+              )}
             </Button>
             <div>
               Need an account? <Link to="/register">SIGN UP</Link>{" "}
