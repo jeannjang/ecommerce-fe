@@ -57,14 +57,14 @@ const OrderDetailDialog = ({ open, handleClose }) => {
                   <tr key={item._id}>
                     <td>{item._id}</td>
                     <td>{item.productId.name}</td>
-                    <td>{currencyFormat(item.price)}</td>
+                    <td>{currencyFormat(item.price, "USD")}</td>
                     <td>{item.qty}</td>
-                    <td>{currencyFormat(item.price * item.qty)}</td>
+                    <td>{currencyFormat(item.price * item.qty, "USD")}</td>
                   </tr>
                 ))}
               <tr>
                 <td colSpan={4}>총계:</td>
-                <td>{currencyFormat(selectedOrder.totalPrice)}</td>
+                <td>{currencyFormat(selectedOrder.totalPrice, "USD")}</td>
               </tr>
             </tbody>
           </Table>

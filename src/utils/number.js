@@ -1,6 +1,39 @@
-export const currencyFormat = (value) => {
+export const CURRENCY_TYPES = {
+  KRW: {
+    symbol: "₩",
+    locale: "ko-KR",
+    precision: 0,
+  },
+  USD: {
+    symbol: "$",
+    locale: "en-US",
+    precision: 0,
+  },
+};
+
+/**
+ * Formats a number into a currency string
+ * @param {number} value - The number to format
+ * @param {string} currencyType - The currency type ('KRW' or 'USD')
+ * @returns {string} Formatted currency string
+ */
+export const currencyFormat = (value, currencyType = "USD") => {
   const number = value !== undefined ? value : 0;
-  return number.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+  const currency = CURRENCY_TYPES[currencyType];
+
+  // Convert KRW to USD
+  const convertedValue = currencyType === "USD" ? number / 1200 : number;
+
+  return new Intl.NumberFormat(currency.locale, {
+    style: "currency",
+    currency: currencyType,
+    minimumFractionDigits: currency.precision,
+    maximumFractionDigits: currency.precision,
+  }).format(convertedValue);
+};
+
+export const wonFormat = (value) => {
+  return currencyFormat(value, "KRW");
 };
 
 export const cc_expires_format = (string) => {
