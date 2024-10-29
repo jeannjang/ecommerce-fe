@@ -11,10 +11,13 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../features/user/userSlice";
+import { Spinner } from "react-bootstrap";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const { user, loading: userSliceLoading } = useSelector(
+    (state) => state.user
+  );
   const { cartItemCount } = useSelector((state) => state.cart);
   const isMobile = window.navigator.userAgent.indexOf("Mobile") !== -1;
   const [showSearchBox, setShowSearchBox] = useState(false);
@@ -86,7 +89,9 @@ const Navbar = () => {
 
         <div>
           <div className="display-flex">
-            {user ? (
+            {userSliceLoading ? (
+              <Spinner animation="border" size="sm" />
+            ) : user ? (
               <div onClick={handleLogout} className="nav-icon">
                 <FontAwesomeIcon icon={faUser} />
                 {!isMobile && (
