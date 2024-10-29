@@ -7,8 +7,6 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import "./style/login.style.css";
 import { loginWithEmail, loginWithGoogle } from "../../features/user/userSlice";
 import { clearErrors } from "../../features/user/userSlice";
-import { size } from "@cloudinary/url-gen/qualifiers/textFit";
-import { type } from "@testing-library/user-event/dist/type";
 import { Spinner } from "react-bootstrap";
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -27,7 +25,7 @@ const Login = () => {
     if (loginError) {
       dispatch(clearErrors());
     }
-  }, [navigate]);
+  }, []);
 
   const handleLoginWithEmail = (event) => {
     event.preventDefault();

@@ -21,6 +21,22 @@ export const loginWithEmail = createAsyncThunk(
   }
 );
 
+export const loginWithToken = createAsyncThunk(
+  "user/loginWithToken",
+  async (_, { rejectWithValue }) => {
+    try {
+      if (!sessionStorage.getItem("authToken")) {
+        return rejectWithValue("No token found");
+      }
+      const response = await api.get("/user/me");
+      return response.data.user;
+    } catch (error) {
+      sessionStorage.removeItem("authToken");
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const loginWithGoogle = createAsyncThunk(
   "user/loginWithGoogle",
   async (token, { rejectWithValue }) => {}
@@ -51,27 +67,10 @@ export const registerUser = createAsyncThunk(
     } catch (error) {
       dispatch(
         showToastMessage({
-          message:
-            error.message || "Failed to create account. Please try again",
+          message: "Failed to create account. Please try again",
           status: "error",
         })
       );
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const loginWithToken = createAsyncThunk(
-  "user/loginWithToken",
-  async (_, { rejectWithValue }) => {
-    try {
-      if (!sessionStorage.getItem("authToken")) {
-        return rejectWithValue("No token found");
-      }
-      const response = await api.get("/user/me");
-      return response.data.user;
-    } catch (error) {
-      sessionStorage.removeItem("authToken");
       return rejectWithValue(error.message);
     }
   }
@@ -122,8 +121,15 @@ const userSlice = createSlice({
         state.loading = false;
         state.loginError = action.payload;
       })
+      .addCase(loginWithToken.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(loginWithToken.fulfilled, (state, action) => {
+        state.loading = false;
         state.user = action.payload;
+      })
+      .addCase(loginWithToken.rejected, (state) => {
+        state.loading = false;
       });
   },
 });

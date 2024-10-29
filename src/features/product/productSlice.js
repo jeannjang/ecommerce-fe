@@ -2,10 +2,19 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../utils/api";
 import { showToastMessage } from "../common/uiSlice";
 
-// 비동기 액션 생성
 export const getProductList = createAsyncThunk(
   "products/getProductList",
-  async (query, { rejectWithValue }) => {}
+  async (query, { rejectWithValue }) => {
+    try {
+      const response = await api.get("/product", { params: query });
+      console.log("API Response:", response);
+
+      return response.data;
+    } catch (error) {
+      console.error("API Error:", error);
+      return rejectWithValue(error.message);
+    }
+  }
 );
 
 export const getProductDetail = createAsyncThunk(
@@ -15,7 +24,20 @@ export const getProductDetail = createAsyncThunk(
 
 export const createProduct = createAsyncThunk(
   "products/createProduct",
-  async (formData, { dispatch, rejectWithValue }) => {}
+  async (formData, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await api.post("/product", formData);
+      dispatch(
+        showToastMessage({
+          message: "New product created successfully",
+          status: "success",
+        })
+      );
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
 );
 
 export const deleteProduct = createAsyncThunk(
@@ -28,7 +50,6 @@ export const editProduct = createAsyncThunk(
   async ({ id, ...formData }, { dispatch, rejectWithValue }) => {}
 );
 
-// 슬라이스 생성
 const productSlice = createSlice({
   name: "products",
   initialState: {
@@ -51,7 +72,34 @@ const productSlice = createSlice({
       state.success = false;
     },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(createProduct.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.success = true; //상품 생성 성공했을때 dialog 닫아주기, 성공메시지 띄워주기, 실패시 에러메시지 띄워주기, dialog 유지
+      })
+      .addCase(createProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.success = false;
+      })
+      .addCase(getProductList.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getProductList.fulfilled, (state, action) => {
+        state.loading = false;
+        state.productList = action.payload.products;
+        state.error = "";
+      })
+      .addCase(getProductList.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
 });
 
 export const { setSelectedProduct, setFilteredList, clearError } =

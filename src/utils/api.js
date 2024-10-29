@@ -3,7 +3,6 @@ import axios from "axios";
 const LOCAL_BACKEND =
   process.env.REACT_APP_LOCAL_BACKEND || "http://localhost:5010/api";
 // const PROD_BACKEND = process.env.REACT_APP_PROD_BACKEND;
-// const BACKEND_PROXY = process.env.REACT_APP_BACKEND_PROXY;
 
 const api = axios.create({
   baseURL: LOCAL_BACKEND,
@@ -11,9 +10,7 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
 });
-/**
- * console.log all requests and responses
- */
+
 api.interceptors.request.use(
   (request) => {
     console.log("Starting Request", request);
@@ -29,6 +26,7 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => {
+    console.log("Response:", response);
     return response;
   },
   function (error) {
