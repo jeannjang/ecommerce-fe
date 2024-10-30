@@ -9,6 +9,7 @@ import {
   createProduct,
   editProduct,
 } from "../../../features/product/productSlice";
+import { currencyFormat } from "../../../utils/number";
 
 const InitialFormData = {
   name: "",
@@ -98,12 +99,12 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   };
 
   const addStock = () => {
-    //재고타입 추가시 배열에 추가
+    //재고 추가시 배열에 추가
     setStock([...stock, []]);
   };
 
   const deleteStock = (idx) => {
-    //재고타입 삭제시 배열에서 삭제
+    //재고 삭제시 배열에서 삭제
     const newStock = stock.filter((item, index) => index !== idx);
     setStock(newStock);
   };
@@ -203,7 +204,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
         <Form.Group className="mb-3" controlId="stock">
           <Form.Label className="mr-1">Stock</Form.Label>
           {stockError && (
-            <span className="error-message">재고를 추가해주세요</span>
+            <span className="error-message">Please add stock</span>
           )}
           <Button size="sm" onClick={addStock}>
             Add +
@@ -227,7 +228,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
                         inValid={true}
                         value={item.toLowerCase()}
                         disabled={stock.some(
-                          (size) => size[0] === item.toLowerCase()
+                          (size) => size[0] === item.toLowerCase() //
                         )}
                         key={index}
                       >
@@ -274,18 +275,33 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
         </Form.Group>
 
         <Row className="mb-3">
-          <Form.Group as={Col} controlId="price">
-            <Form.Label>Price</Form.Label>
-            <Form.Control
-              value={formData.price}
-              required
-              onChange={handleChange}
-              type="number"
-              placeholder="0"
-            />
-          </Form.Group>
+          <Col md={4}>
+            <Form.Group controlId="price">
+              <Form.Label>Price KRW to USD </Form.Label>
+              <Form.Control
+                value={formData.price}
+                required
+                onChange={handleChange}
+                type="number"
+                placeholder="0"
+              />
+            </Form.Group>
 
-          <Form.Group as={Col} controlId="category">
+            <Form.Group className="mt-2">
+              <Form.Control
+                value={
+                  formData.price
+                    ? currencyFormat(formData.price, "USD").replace("$", "")
+                    : "0"
+                }
+                disabled
+                type="text"
+                className="bg-secondary bg-opacity-10 text-muted"
+              />
+            </Form.Group>
+          </Col>
+
+          <Form.Group as={Col} md={4} controlId="category">
             <Form.Label>Category</Form.Label>
             <Form.Control
               as="select"
@@ -302,7 +318,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
             </Form.Control>
           </Form.Group>
 
-          <Form.Group as={Col} controlId="status">
+          <Form.Group as={Col} md={4} controlId="status">
             <Form.Label>Status</Form.Label>
             <Form.Select
               value={formData.status}
