@@ -77,7 +77,7 @@ const AdminProductPage = () => {
           <SearchBox
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            placeholder="제품 이름으로 검색"
+            placeholder="Enter product name..."
             field="name"
           />
         </div>
@@ -90,6 +90,7 @@ const AdminProductPage = () => {
           data={productList || []}
           deleteItem={deleteItem}
           openEditForm={openEditForm}
+          searchQuery={searchQuery}
         />
         <ReactPaginate
           nextLabel="next >"

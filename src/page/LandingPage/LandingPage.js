@@ -67,10 +67,10 @@ const LandingPage = () => {
           ))
         ) : (
           <div className="text-align-center empty-bag">
-            {searchQuery.name === "" ? ( // name을 searchQuery.name으로
-              <h2>등록된 상품이 없습니다!</h2>
+            {searchQuery.name === "" ? (
+              <h4>No products to show yet.</h4>
             ) : (
-              <h2>{searchQuery.name}과 일치한 상품이 없습니다!</h2>
+              <h4>No items found matching "{searchQuery.name}"</h4>
             )}
           </div>
         )}
