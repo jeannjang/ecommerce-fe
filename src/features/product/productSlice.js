@@ -7,7 +7,7 @@ export const getProductList = createAsyncThunk(
   async (query, { rejectWithValue }) => {
     try {
       const response = await api.get("/product", { params: query });
-      console.log("API Response:", response);
+      console.log("response", response);
 
       return response.data;
     } catch (error) {
@@ -81,7 +81,7 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = "";
         state.success = true;
-        state.productList.push(action.payload); // 추가 저장된 상품을 리덕스에서 바로 띄워주기 위해 프로덕트리스트에 추가
+        state.productList.unshift(action.payload); // 추가 저장된 상품을 리덕스에서 바로 띄워주기 위해 프로덕트리스트에 추가
       })
       .addCase(createProduct.rejected, (state, action) => {
         state.loading = false;
@@ -95,6 +95,7 @@ const productSlice = createSlice({
         state.loading = false;
         state.productList = action.payload.products;
         state.error = "";
+        state.totalPageNum = action.payload.totalPageNum;
       })
       .addCase(getProductList.rejected, (state, action) => {
         state.loading = false;

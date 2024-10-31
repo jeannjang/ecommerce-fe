@@ -56,19 +56,18 @@ const AdminProductPage = () => {
   };
 
   const openEditForm = (product) => {
-    //edit모드로 설정하고
-    // 아이템 수정다이얼로그 열어주기
+    //edit모드로 설정하고 아이템 수정다이얼로그 열어주기
   };
 
   const handleClickNewItem = () => {
-    //new 모드로 설정하고
-    // 다이얼로그 열어주기
+    //new 모드로 설정하고 다이얼로그 열어주기
     setMode("new");
     setShowDialog(true);
   };
 
   const handlePageClick = ({ selected }) => {
     //  쿼리에 페이지값 바꿔주기
+    setSearchQuery({ ...searchQuery, page: selected + 1 });
   };
 
   return (
@@ -96,7 +95,7 @@ const AdminProductPage = () => {
           nextLabel="next >"
           onPageChange={handlePageClick}
           pageRangeDisplayed={5}
-          pageCount={100}
+          pageCount={totalPageNum}
           forcePage={searchQuery.page - 1}
           previousLabel="< previous"
           renderOnZeroPageCount={null}
