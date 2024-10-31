@@ -85,34 +85,39 @@ const AdminProductPage = () => {
           Add New Item +
         </Button>
 
-        <ProductTable
-          header={tableHeader}
-          data={productList || []}
-          deleteItem={deleteItem}
-          openEditForm={openEditForm}
-          searchQuery={searchQuery}
-        />
-        <ReactPaginate
-          nextLabel="next >"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
-          pageCount={totalPageNum}
-          forcePage={searchQuery.page - 1}
-          previousLabel="< previous"
-          renderOnZeroPageCount={null}
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          previousClassName="page-item"
-          previousLinkClassName="page-link"
-          nextClassName="page-item"
-          nextLinkClassName="page-link"
-          breakLabel="..."
-          breakClassName="page-item"
-          breakLinkClassName="page-link"
-          containerClassName="pagination"
-          activeClassName="active"
-          className="display-center list-style-none"
-        />
+        <div className="mb-5">
+          <ProductTable
+            header={tableHeader}
+            data={productList || []}
+            deleteItem={deleteItem}
+            openEditForm={openEditForm}
+            searchQuery={searchQuery}
+          />
+        </div>
+
+        <div className="mt-4 mb-5">
+          <ReactPaginate
+            nextLabel="next >"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={totalPageNum}
+            forcePage={searchQuery.page - 1}
+            previousLabel="< previous"
+            renderOnZeroPageCount={null}
+            pageClassName="page-item"
+            pageLinkClassName="page-link shadow-none"
+            previousClassName="page-item"
+            previousLinkClassName="page-link shadow-none"
+            nextClassName="page-item"
+            nextLinkClassName="page-link shadow-none"
+            breakLabel="..."
+            breakClassName="page-item"
+            breakLinkClassName="page-link shadow-none"
+            containerClassName="pagination"
+            activeClassName="active"
+            className="display-center list-style-none"
+          />
+        </div>
       </Container>
 
       <NewItemDialog
