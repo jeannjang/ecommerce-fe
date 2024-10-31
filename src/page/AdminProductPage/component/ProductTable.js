@@ -51,7 +51,7 @@ const ProductTable = ({ header, data, deleteItem, openEditForm }) => {
           ) : (
             <tr>
               <td colSpan={header.length} className="text-center">
-                No Data to show
+                No items found matching your search criteria.
               </td>
             </tr>
           )}
