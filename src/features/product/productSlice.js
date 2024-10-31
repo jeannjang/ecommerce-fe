@@ -33,7 +33,7 @@ export const createProduct = createAsyncThunk(
           status: "success",
         })
       );
-      return response.data.data;
+      return response.data.product;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -80,7 +80,8 @@ const productSlice = createSlice({
       .addCase(createProduct.fulfilled, (state, action) => {
         state.loading = false;
         state.error = "";
-        state.success = true; //상품 생성 성공했을때 dialog 닫아주기, 성공메시지 띄워주기, 실패시 에러메시지 띄워주기, dialog 유지
+        state.success = true;
+        state.productList.push(action.payload); // 추가 저장된 상품을 리덕스에서 바로 띄워주기 위해 프로덕트리스트에 추가
       })
       .addCase(createProduct.rejected, (state, action) => {
         state.loading = false;
