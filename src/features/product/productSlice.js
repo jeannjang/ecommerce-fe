@@ -42,7 +42,28 @@ export const createProduct = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
-  async (id, { dispatch, rejectWithValue }) => {}
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      await api.delete(`/product/${id}`);
+
+      dispatch(
+        showToastMessage({
+          message: "Product deleted successfully",
+          status: "success",
+        })
+      );
+
+      return id;
+    } catch (error) {
+      dispatch(
+        showToastMessage({
+          message: "Failed to delete product",
+          status: "error",
+        })
+      );
+      return rejectWithValue(error.message);
+    }
+  }
 );
 
 export const editProduct = createAsyncThunk(
@@ -121,14 +142,29 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = "";
         state.success = true;
-        state.productList = state.productList.map((product) =>
-          product._id === action.payload._id ? action.payload : product
+        state.productList = state.productList.map(
+          (product) =>
+            product._id === action.payload._id ? action.payload : product // 수정된 상품을 리덕스에서 바로 띄워주기 위해 프로덕트리스트에 수정
         );
       })
       .addCase(editProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.success = false;
+      })
+      .addCase(deleteProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.productList = state.productList.filter(
+          (product) => product._id !== action.payload // 삭제된 상품을 리스트에서 제거
+        );
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
