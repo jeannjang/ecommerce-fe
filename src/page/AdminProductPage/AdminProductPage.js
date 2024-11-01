@@ -52,15 +52,19 @@ const AdminProductPage = () => {
   }, [searchQuery]);
 
   const deleteItem = (id) => {
-    //아이템 삭제하기
+    //아이템 삭제
+    dispatch(deleteProduct(id));
   };
 
   const openEditForm = (product) => {
-    //edit모드로 설정하고 아이템 수정다이얼로그 열어주기
+    //edit모드로 설정하고 아이템 수정다이얼로그 열기
+    setMode("edit");
+    dispatch(setSelectedProduct(product));
+    setShowDialog(true);
   };
 
   const handleClickNewItem = () => {
-    //new 모드로 설정하고 다이얼로그 열어주기
+    //new 모드로 설정하고 다이얼로그 열기
     setMode("new");
     setShowDialog(true);
   };

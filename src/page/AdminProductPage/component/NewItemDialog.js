@@ -36,14 +36,18 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   console.log("stock", stock);
 
   useEffect(() => {
-    if (success) setShowDialog(false);
-  }, [success]);
-
-  useEffect(() => {
-    if (error || !success) {
+    if (success === true) {
+      setShowDialog(false);
       dispatch(clearError());
     }
+  }, [success, setShowDialog, dispatch]);
+
+  useEffect(() => {
+    // if (error || !success) {
+    //   dispatch(clearError());
+    // }
     if (showDialog) {
+      dispatch(clearError());
       if (mode === "edit") {
         setFormData(selectedProduct);
         // 객체형태로 온 stock을  다시 배열로 세팅해주기
@@ -57,7 +61,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
         setStock([]);
       }
     }
-  }, [showDialog]);
+  }, [showDialog, mode, selectedProduct]);
 
   const handleClose = () => {
     //모든걸 초기화 시킨 후 다이얼로그 닫기
@@ -85,7 +89,9 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
     if (mode === "new") {
       dispatch(createProduct({ ...formData, stock: totalStock }));
     } else {
-      dispatch(editProduct({ ...formData, stock: totalStock }));
+      dispatch(
+        editProduct({ ...formData, stock: totalStock, id: selectedProduct._id })
+      );
     }
   };
 
@@ -110,7 +116,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   };
 
   const handleSizeChange = (value, index) => {
-    //재고 타입 변환하기
+    //재고 사이즈 변환하기
     const newStock = [...stock];
     newStock[index][0] = value;
     setStock(newStock);

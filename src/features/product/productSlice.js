@@ -47,7 +47,20 @@ export const deleteProduct = createAsyncThunk(
 
 export const editProduct = createAsyncThunk(
   "products/editProduct",
-  async ({ id, ...formData }, { dispatch, rejectWithValue }) => {}
+  async ({ id, ...formData }, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await api.put(`/product/${id}`, formData);
+      dispatch(
+        showToastMessage({
+          message: "Product updated successfully",
+          status: "success",
+        })
+      );
+      return response.data.product;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
 );
 
 const productSlice = createSlice({
@@ -100,6 +113,22 @@ const productSlice = createSlice({
       .addCase(getProductList.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(editProduct.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(editProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.success = true;
+        state.productList = state.productList.map((product) =>
+          product._id === action.payload._id ? action.payload : product
+        );
+      })
+      .addCase(editProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.success = false;
       });
   },
 });
