@@ -7,6 +7,7 @@ import { currencyFormat } from "../../utils/number";
 import "./style/productDetail.style.css";
 import { getProductDetail } from "../../features/product/productSlice";
 import { addToCart } from "../../features/cart/cartSlice";
+import { showToastMessage } from "../../features/common/uiSlice";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
@@ -17,13 +18,33 @@ const ProductDetail = () => {
   const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
 
+  // 사이즈를 선택안했다면 에러메세지
+  // 아직 로그인을 안한유저라면 로그인페이지로
+  // 카트에 아이템 추가하기
   const addItemToCart = () => {
-    //사이즈를 아직 선택안했다면 에러
-    // 아직 로그인을 안한유저라면 로그인페이지로
-    // 카트에 아이템 추가하기
+    if (size === "") {
+      setSizeError(true);
+      return;
+    }
+
+    if (!user) {
+      dispatch(
+        showToastMessage({
+          message: "Please sign in first",
+          status: "error",
+        })
+      );
+      navigate("/login");
+      return;
+    }
+
+    dispatch(addToCart({ id, size }));
   };
+
+  // 선택된 사이즈를 state에 저장
   const selectSize = (value) => {
-    // 사이즈 추가하기
+    setSize(value);
+    setSizeError("");
   };
 
   useEffect(() => {
@@ -67,7 +88,7 @@ const ProductDetail = () => {
               id="dropdown-basic"
               align="start"
             >
-              {size === "" ? "사이즈 선택" : size.toUpperCase()}
+              {size === "" ? "SELECT A SIZE" : size.toUpperCase()}
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="size-drop-down">
@@ -86,7 +107,7 @@ const ProductDetail = () => {
             </Dropdown.Menu>
           </Dropdown>
           <div className="warning-message">
-            {sizeError && "사이즈를 선택해주세요."}
+            {sizeError && "Please select a size to proceed"}
           </div>
           <Button variant="dark" className="add-button" onClick={addItemToCart}>
             추가
