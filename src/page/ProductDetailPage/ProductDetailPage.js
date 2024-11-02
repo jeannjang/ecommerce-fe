@@ -24,9 +24,8 @@ const ProductDetail = () => {
   const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
 
-  // 사이즈를 선택안했다면 에러메세지
-  // 아직 로그인을 안한유저라면 로그인페이지로
-  // 카트에 아이템 추가하기
+  // 사이즈 미선택시 에러메세지
+  // 카트에 아이템 추가
   const addItemToCart = () => {
     if (size === "") {
       setSizeError(true);
@@ -40,7 +39,7 @@ const ProductDetail = () => {
           status: "error",
         })
       );
-      navigate("/login");
+      navigate("/login", { state: { from: `/product/${id}` } }); // 현재페이지 URL을 state로 전달
       return;
     }
 

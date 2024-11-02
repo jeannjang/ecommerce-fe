@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { GoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -13,6 +13,7 @@ const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     user,
     loginError,
@@ -27,6 +28,12 @@ const Login = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      navigate(location.state?.from || "/"); // location.state.from이 있으면 해당 URL로, 없으면 홈으로 이동
+    }
+  }, [user, navigate, location]);
+
   const handleLoginWithEmail = (event) => {
     event.preventDefault();
     dispatch(loginWithEmail({ email, password }));
@@ -36,9 +43,9 @@ const Login = () => {
     //구글 로그인 하기
   };
 
-  if (user) {
-    navigate("/"); //로그인 성공시 홈으로 이동
-  }
+  // if (user) {
+  //   navigate("/"); //로그인 성공시 홈으로 이동
+  // }
   return (
     <>
       <Container className="login-area">
