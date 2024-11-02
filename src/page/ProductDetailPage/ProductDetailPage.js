@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Row, Col, Button, Dropdown } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Dropdown,
+  Spinner,
+} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { ColorRing } from "react-loader-spinner";
 import { currencyFormat } from "../../utils/number";
 import "./style/productDetail.style.css";
 import { getProductDetail } from "../../features/product/productSlice";
@@ -51,18 +57,13 @@ const ProductDetail = () => {
     dispatch(getProductDetail(id));
   }, [id, dispatch]);
 
-  if (loading || !selectedProduct)
+  if (loading || !selectedProduct) {
     return (
-      <ColorRing
-        visible={true}
-        height="80"
-        width="80"
-        ariaLabel="blocks-loading"
-        wrapperStyle={{}}
-        wrapperClass="blocks-wrapper"
-        colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
-      />
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <Spinner animation="border" />
+      </div>
     );
+  }
   return (
     <Container className="product-detail-card">
       <Row>
