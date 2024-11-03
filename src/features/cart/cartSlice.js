@@ -64,14 +64,41 @@ export const deleteCartItem = createAsyncThunk(
   }
 );
 
-export const updateQty = createAsyncThunk(
-  "cart/updateQty",
-  async ({ id, value }, { rejectWithValue }) => {}
+export const updateCartItemQty = createAsyncThunk(
+  "cart/updateCartItemQty",
+  async ({ itemId, qty }, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await api.put(`/cart/${itemId}`, { qty });
+
+      return response.data.cart;
+    } catch (error) {
+      let errorMessage = "Cnnot update item quantity";
+      if (error.message === "Out of stock") {
+        errorMessage = "Out of stock";
+      }
+
+      dispatch(
+        showToastMessage({
+          message: errorMessage,
+          status: "error",
+        })
+      );
+
+      return rejectWithValue(error.message);
+    }
+  }
 );
 
 export const getCartQty = createAsyncThunk(
   "cart/getCartQty",
-  async (_, { rejectWithValue, dispatch }) => {}
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await api.get("/cart");
+      return response.data.cart?.items?.length || 0;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
 );
 
 const cartSlice = createSlice({
@@ -121,6 +148,17 @@ const cartSlice = createSlice({
         state.error = action.payload;
         state.cartList = [];
       })
+      .addCase(getCartQty.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getCartQty.fulfilled, (state, action) => {
+        state.loading = false;
+        state.cartItemCount = action.payload;
+      })
+      .addCase(getCartQty.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       .addCase(deleteCartItem.pending, (state) => {
         state.loading = true;
         state.error = "";
@@ -128,12 +166,28 @@ const cartSlice = createSlice({
       .addCase(deleteCartItem.fulfilled, (state, action) => {
         state.loading = false;
         state.cartList = action.payload.items;
-        // update total price
+        state.cartItemCount = action.payload.items.length;
         state.totalPrice = state.cartList.reduce((total, item) => {
           return total + item.productId.price * item.qty;
         }, 0);
       })
       .addCase(deleteCartItem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateCartItemQty.pending, (state) => {
+        state.loading = true;
+        state.error = "";
+      })
+      .addCase(updateCartItemQty.fulfilled, (state, action) => {
+        state.loading = false;
+        state.cartList = action.payload.items;
+        state.cartItemCount = action.payload.items.length;
+        state.totalPrice = state.cartList.reduce((total, item) => {
+          return total + item.productId.price * item.qty;
+        }, 0);
+      })
+      .addCase(updateCartItemQty.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
