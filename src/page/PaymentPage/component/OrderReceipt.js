@@ -13,7 +13,7 @@ const OrderReceipt = () => {
 
   return (
     <div className="receipt-container">
-      <h3 className="receipt-title">주문 내역</h3>
+      <h4 className="receipt-title">ORDER SUMMARY</h4>
       <ul className="receipt-list">
         {cartList.map((item) => (
           <li key={item._id} className="display-flex space-between">
@@ -39,7 +39,7 @@ const OrderReceipt = () => {
             className="payment-button"
             onClick={() => navigate("/payment")}
           >
-            결제 계속하기
+            Proceed to Checkout
           </Button>
         )}
 
