@@ -16,13 +16,13 @@ const AppLayout = ({ children }) => {
 
   useEffect(() => {
     dispatch(loginWithToken());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (user) {
       dispatch(getCartQty());
     }
-  }, []);
+  }, [user, dispatch]);
 
   return (
     <div>
