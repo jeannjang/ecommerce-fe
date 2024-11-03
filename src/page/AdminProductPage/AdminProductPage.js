@@ -138,7 +138,6 @@ const AdminProductPage = () => {
           />
         </div>
 
-        {/* 삭제 확인 Modal 추가 */}
         <Modal show={showDeleteModal} onHide={cancelDelete}>
           <Modal.Header closeButton>
             <Modal.Title>Delete Confirmation</Modal.Title>
