@@ -1,44 +1,52 @@
-.product-card-cart{
-    margin-bottom: 10px;
-}
-.qty-dropdown{
-    max-width:400px;
-}
-.trash-button{
-    background-color: white;
-    border: 1px solid gray;
-}
-.product-card-cart{
-    background-color: ghostwhite;
-    padding:10px;
-}
-.receipt-container{
-    border: 1px solid gray;
-    padding: 32px 24px;
-}
-.receipt-list{
-    list-style-type: none;
-    padding: 0;
-    border-bottom: 1px solid black;
+.product-card-cart {
+  background-color: white;
+  padding: 25px;
+  border-radius: 5px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); */
+  margin-bottom: 15px;
+  transition: all 0.2s ease;
 }
 
-.receipt-list li{
-    padding-bottom: 10px;
+.product-card-cart:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.qty-dropdown {
+  border: 1px solid #dee2e6;
+  border-radius: 2px;
+  padding: 5px 10px;
+}
+.trash-button {
+  background-color: white;
+  border: 1px solid gray;
 }
 
-.receipt-title{
-    margin-bottom: 20px;
+.receipt-container {
+  border: 1px solid gray;
+  padding: 32px 24px;
+}
+.receipt-list {
+  list-style-type: none;
+  padding: 0;
+  border-bottom: 1px solid black;
 }
 
-.payment-button{
-   width: 100%;
-   padding: 16px;
-   margin-bottom: 20px;
+.receipt-list li {
+  padding-bottom: 10px;
 }
-.text-align-center{
-    text-align: center;
+
+.receipt-title {
+  margin-bottom: 20px;
 }
-.empty-bag{
-    background-color: white;
-    padding: 20px;
+
+.payment-button {
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+.text-align-center {
+  text-align: center;
+}
+.empty-bag {
+  background-color: white;
+  padding: 20px;
 }

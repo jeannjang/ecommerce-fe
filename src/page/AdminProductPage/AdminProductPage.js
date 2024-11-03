@@ -155,7 +155,7 @@ const AdminProductPage = () => {
             </p>
           </Modal.Body>
           <Modal.Footer className="justify-content-center">
-            <Button variant="secondary" onClick={cancelDelete}>
+            <Button variant="outline-secondary" onClick={cancelDelete}>
               No, Cancel
             </Button>
             <Button variant="danger" onClick={confirmDelete}>

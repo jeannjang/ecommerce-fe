@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Row, Col, Button, Modal } from "react-bootstrap";
+import { Row, Col, Button, Modal, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { currencyFormat } from "../../../utils/number";
 import {
   deleteCartItem,
   updateCartItemQty,
 } from "../../../features/cart/cartSlice";
-import { Form } from "react-bootstrap";
 
 const CartProductCard = ({ item }) => {
   const dispatch = useDispatch();
@@ -44,36 +44,54 @@ const CartProductCard = ({ item }) => {
   return (
     <>
       <div className="product-card-cart">
-        <Row>
-          <Col md={2} xs={12}>
-            <img src={item.productId.image} width={112} alt="product" />
+        <Row className="align-items-center">
+          <Col md={2} xs={12} className="mb-3 mb-md-0">
+            <Link to={`/product/${item.productId._id}`}>
+              <img
+                src={item.productId.image}
+                width={112}
+                alt={item.productId.name}
+                className="w-100"
+              />
+            </Link>
           </Col>
-          <Col md={10} xs={12}>
-            <div className="display-flex space-between">
-              <h3>{item.productId.name}</h3>
-              <button
-                className="trash-button"
-                onClick={() => setShowConfirmModal(true)}
-              >
-                <FontAwesomeIcon icon={faTrash} width={24} />
-              </button>
+          <Col md={7} xs={12}>
+            <div className="mb-2">
+              <h4 className="mb-0">{item.productId.name}</h4>
             </div>
-            <div>
+            <div className="mb-1">
               <strong>{currencyFormat(item.productId.price, "USD")}</strong>
             </div>
-            <div>Size: {item.size}</div>
-            <div>
-              Total: {currencyFormat(item.productId.price * item.qty, "USD")}
-            </div>
-            <div className="quantity-selector">
-              Quantity:
-              <Form.Select
-                value={item.qty}
-                onChange={(e) => handleQtyChange(e.target.value)}
-                className="qty-dropdown"
+            <div className="text-muted mb-1">Size: {item.size}</div>
+            <div className="d-flex align-items-center gap-3">
+              <div className="d-flex align-items-center">
+                <span className="me-2">Quantity:</span>
+                <Form.Select
+                  value={item.qty}
+                  onChange={(e) => handleQtyChange(e.target.value)}
+                  className="qty-dropdown"
+                  style={{ width: "80px" }}
+                >
+                  {getQuantityOptions()}
+                </Form.Select>
+              </div>
+              <Link
+                to={`/product/${item.productId._id}`}
+                className="text-decoration-none text-muted small"
               >
-                {getQuantityOptions()}
-              </Form.Select>
+                View Details
+              </Link>
+              <button
+                className="trash-button border-0 bg-transparent p-0"
+                onClick={() => setShowConfirmModal(true)}
+              >
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
+            </div>
+          </Col>
+          <Col md={3} xs={12} className="text-md-end mt-3 mt-md-0">
+            <div className="fw-bold">
+              Total: {currencyFormat(item.productId.price * item.qty, "USD")}
             </div>
           </Col>
         </Row>
@@ -83,18 +101,18 @@ const CartProductCard = ({ item }) => {
         <Modal.Header closeButton>
           <Modal.Title>Delete Confirmation</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <p>Are you sure you do not want to keep this product?</p>
+        <Modal.Body className="text-center">
+          <p>Are you sure you don't want to keep this product?</p>
         </Modal.Body>
         <Modal.Footer>
           <Button
-            variant="secondary"
+            variant="outline-secondary"
             onClick={() => setShowConfirmModal(false)}
           >
-            No, Keep it
+            No, Cancel
           </Button>
           <Button variant="danger" onClick={handleDelete}>
-            Yes, Delete
+            Yes, Remove
           </Button>
         </Modal.Footer>
       </Modal>
