@@ -53,7 +53,7 @@ const Navbar = () => {
               <FontAwesomeIcon className="search-icon" icon={faSearch} />
               <input
                 type="text"
-                placeholder="제품검색"
+                placeholder="Search..."
                 onKeyPress={onCheckEnter}
               />
             </div>
@@ -98,19 +98,21 @@ const Navbar = () => {
               <div onClick={handleLogout} className="nav-icon">
                 <FontAwesomeIcon icon={faUser} />
                 {!isMobile && (
-                  <span style={{ cursor: "pointer" }}>로그아웃</span>
+                  <span style={{ cursor: "pointer" }}>SIGN OUT</span>
                 )}
               </div>
             ) : (
               <div onClick={() => navigate("/login")} className="nav-icon">
                 <FontAwesomeIcon icon={faUser} />
-                {!isMobile && <span style={{ cursor: "pointer" }}>로그인</span>}
+                {!isMobile && (
+                  <span style={{ cursor: "pointer" }}>SIGN IN</span>
+                )}
               </div>
             )}
             <div onClick={() => navigate("/cart")} className="nav-icon">
               <FontAwesomeIcon icon={faShoppingBag} />
               {!isMobile && (
-                <span style={{ cursor: "pointer" }}>{`쇼핑백(${
+                <span style={{ cursor: "pointer" }}>{`CART(${
                   cartItemCount || 0
                 })`}</span>
               )}
@@ -120,7 +122,7 @@ const Navbar = () => {
               className="nav-icon"
             >
               <FontAwesomeIcon icon={faBox} />
-              {!isMobile && <span style={{ cursor: "pointer" }}>내 주문</span>}
+              {!isMobile && <span style={{ cursor: "pointer" }}>ORDER</span>}
             </div>
             {isMobile && (
               <div className="nav-icon" onClick={() => setShowSearchBox(true)}>
@@ -149,7 +151,7 @@ const Navbar = () => {
             <FontAwesomeIcon icon={faSearch} />
             <input
               type="text"
-              placeholder="제품검색"
+              placeholder="Search..."
               onKeyPress={onCheckEnter}
             />
           </div>
