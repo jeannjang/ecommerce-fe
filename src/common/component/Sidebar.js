@@ -13,53 +13,61 @@ const Sidebar = () => {
 
   const NavbarContent = () => {
     return (
-      <div>
-        <Link to="/">
-          <img width={100} src="/image/hm-logo.png" alt="hm-logo.png" />
+      <div className="p-3">
+        <Link to="/" className="d-block mb-4">
+          <img
+            width={100}
+            src="/image/hm-logo.png"
+            alt="hm-logo"
+            className="img-fluid"
+          />
         </Link>
-        <div className="sidebar-item">Admin Account</div>
-        <ul className="sidebar-area">
-          <li
-            className="sidebar-item"
-            onClick={() => handleSelectMenu("/admin/product?page=1")}
-          >
-            product
+        <h6 className="text-uppercase mb-3">Admin Account</h6>
+        <ul className="nav flex-column">
+          <li className="nav-item">
+            <button
+              className="btn text-start border-0 w-100 py-2"
+              onClick={() => handleSelectMenu("/admin/product?page=1")}
+            >
+              Products
+            </button>
           </li>
-          <li
-            className="sidebar-item"
-            onClick={() => handleSelectMenu("/admin/order?page=1")}
-          >
-            order
+          <li className="nav-item">
+            <button
+              className="btn text-start border-0 w-100 py-2"
+              onClick={() => handleSelectMenu("/admin/order?page=1")}
+            >
+              Orders
+            </button>
           </li>
         </ul>
       </div>
     );
   };
-  return (
-    <>
-      <div className="sidebar-toggle">{NavbarContent()}</div>
 
-      <Navbar bg="light" expand={false} className="mobile-sidebar-toggle">
-        <Container fluid>
-          <img width={80} src="/image/hm-logo.png" alt="hm-logo.png" />
-          <Navbar.Brand href="#"></Navbar.Brand>
-          <Navbar.Toggle
-            aria-controls={`offcanvasNavbar-expand`}
-            onClick={() => setShow(true)}
+  return (
+    <Navbar bg="light" expand={false}>
+      <Container fluid>
+        <Navbar.Toggle onClick={() => setShow(true)} />
+        <Link to="/">
+          <img
+            width={80}
+            src="/image/hm-logo.png"
+            alt="hm-logo"
+            className="img-fluid"
           />
-          <Navbar.Offcanvas
-            id={`offcanvasNavbar-expand`}
-            aria-labelledby={`offcanvasNavbarLabel-expand`}
-            placement="start"
-            className="sidebar"
-            show={show}
-          >
-            <Offcanvas.Header closeButton></Offcanvas.Header>
-            <Offcanvas.Body>{NavbarContent()}</Offcanvas.Body>
-          </Navbar.Offcanvas>
-        </Container>
-      </Navbar>
-    </>
+        </Link>
+        <div style={{ width: "42px" }}></div> {/* 햄버거 메뉴 너비만큼 여백 */}
+        <Navbar.Offcanvas
+          show={show}
+          onHide={() => setShow(false)}
+          placement="start"
+        >
+          <Offcanvas.Header closeButton />
+          <Offcanvas.Body>{NavbarContent()}</Offcanvas.Body>
+        </Navbar.Offcanvas>
+      </Container>
+    </Navbar>
   );
 };
 

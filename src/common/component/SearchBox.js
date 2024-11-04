@@ -12,16 +12,22 @@ const SearchBox = ({ searchQuery, setSearchQuery, placeholder, field }) => {
       setSearchQuery({ ...searchQuery, page: 1, [field]: event.target.value });
     }
   };
+
   return (
-    <div className="search-box">
-      <FontAwesomeIcon icon={faSearch} />
-      <input
-        type="text"
-        placeholder={placeholder}
-        onKeyPress={onCheckEnter}
-        onChange={(event) => setKeyword(event.target.value)}
-        value={keyword}
-      />
+    <div className="search-input-container">
+      <div className="input-group">
+        <span className="input-group-text border-0 bg-transparent">
+          <FontAwesomeIcon icon={faSearch} />
+        </span>
+        <input
+          type="text"
+          className="form-control border-0 bg-transparent"
+          placeholder={placeholder}
+          onKeyPress={onCheckEnter}
+          onChange={(event) => setKeyword(event.target.value)}
+          value={keyword}
+        />
+      </div>
     </div>
   );
 };

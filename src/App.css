@@ -91,3 +91,22 @@ body {
   min-width: 18px;
   padding: 3px;
 }
+/* .locate-center {
+  padding: 15px;
+} */
+
+/* 네비게이션바 로고 중앙 정렬 */
+.navbar .container-fluid {
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 네비게이션바 높이 조절 */
+.navbar {
+  min-height: 70px;
+}
+
+/* 사이드바 메뉴 호버 효과 */
+.nav-item button:hover {
+  background-color: #f8f9fa;
+}

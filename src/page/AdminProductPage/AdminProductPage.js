@@ -90,8 +90,8 @@ const AdminProductPage = () => {
   };
 
   return (
-    <div className="locate-center">
-      <Container>
+    <div>
+      <Container fluid className="px-3">
         <div className="mt-2 ">
           <SearchBox
             searchQuery={searchQuery}
