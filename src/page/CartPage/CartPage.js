@@ -9,7 +9,7 @@ import { getCartList } from "../../features/cart/cartSlice";
 
 const CartPage = () => {
   const dispatch = useDispatch();
-  const { cartList, totalPrice } = useSelector((state) => state.cart);
+  const { cartList } = useSelector((state) => state.cart);
 
   useEffect(() => {
     dispatch(getCartList());

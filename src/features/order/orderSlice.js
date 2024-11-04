@@ -1,22 +1,43 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getCartQty } from "../cart/cartSlice";
+import { getCartQty, initialCart } from "../cart/cartSlice";
 import api from "../../utils/api";
 import { showToastMessage } from "../common/uiSlice";
 
-// Define initial state
-const initialState = {
-  orderList: [],
-  orderNum: "",
-  selectedOrder: {},
-  error: "",
-  loading: false,
-  totalPageNum: 1,
-};
-
-// Async thunks
 export const createOrder = createAsyncThunk(
   "order/createOrder",
-  async (payload, { dispatch, rejectWithValue }) => {}
+  async (orderData, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await api.post("/order", {
+        ...orderData,
+        items: orderData.orderList.map((item) => ({
+          ...item,
+          quantity: item.qty, // qty를 quantity로 변환
+        })),
+      });
+
+      if (response.data.status === "success") {
+        dispatch(
+          showToastMessage({
+            message: "주문이 완료되었습니다!",
+            status: "success",
+          })
+        );
+
+        dispatch(initialCart());
+        dispatch(getCartQty());
+
+        return response.data.orderNum;
+      }
+    } catch (error) {
+      dispatch(
+        showToastMessage({
+          message: error.message || "주문 처리 중 오류가 발생했습니다.",
+          status: "error",
+        })
+      );
+      return rejectWithValue(error.message);
+    }
+  }
 );
 
 export const getOrder = createAsyncThunk(
@@ -34,17 +55,42 @@ export const updateOrder = createAsyncThunk(
   async ({ id, status }, { dispatch, rejectWithValue }) => {}
 );
 
-// Order slice
 const orderSlice = createSlice({
   name: "order",
-  initialState,
+  initialState: {
+    orderList: [],
+    orderNum: "",
+    selectedOrder: {},
+    error: "",
+    loading: false,
+    totalPageNum: 1,
+  },
   reducers: {
     setSelectedOrder: (state, action) => {
       state.selectedOrder = action.payload;
     },
+    clearOrderNum: (state) => {
+      state.orderNum = "";
+    },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(createOrder.pending, (state) => {
+        state.loading = true;
+        state.error = "";
+      })
+      .addCase(createOrder.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.orderNum = action.payload;
+      })
+      .addCase(createOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.orderNum = "";
+      });
+  },
 });
 
-export const { setSelectedOrder } = orderSlice.actions;
+export const { setSelectedOrder, clearOrderNum } = orderSlice.actions;
 export default orderSlice.reducer;

@@ -9,7 +9,7 @@ const OrderReceipt = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { cartList, totalPrice } = useSelector((state) => state.cart);
-  const isCartPage = location.pathname.includes("/cart"); //
+  const isCartPage = location.pathname.includes("/cart");
 
   return (
     <div className="receipt-container">
@@ -20,7 +20,7 @@ const OrderReceipt = () => {
             <div>
               {item.productId.name} ({item.size}) x {item.qty}
             </div>
-            <div>{currencyFormat(item.productId.price * item.qty, "USD")}</div>
+            <div>{currencyFormat(item.productId.price * item.qty)}</div>
           </li>
         ))}
       </ul>
@@ -29,19 +29,18 @@ const OrderReceipt = () => {
           <strong>Total:</strong>
         </div>
         <div>
-          <strong>{currencyFormat(totalPrice, "USD")}</strong>
+          <strong>{currencyFormat(totalPrice)}</strong>
         </div>
       </div>
-      {isCartPage &&
-        cartList.length > 0 && ( //
-          <Button
-            variant="dark"
-            className="payment-button"
-            onClick={() => navigate("/payment")}
-          >
-            Proceed to Checkout
-          </Button>
-        )}
+      {isCartPage && cartList.length > 0 && (
+        <Button
+          variant="dark"
+          className="payment-button"
+          onClick={() => navigate("/payment")}
+        >
+          Proceed to Checkout
+        </Button>
+      )}
 
       <div className="small text-muted mt-3">
         <p>가능한 결제 수단</p>
