@@ -1,39 +1,26 @@
 export const CURRENCY_TYPES = {
-  KRW: {
-    symbol: "₩",
-    locale: "ko-KR",
-    precision: 0,
-  },
-  USD: {
+  NZD: {
     symbol: "$",
-    locale: "en-US",
-    precision: 0,
+    locale: "en-NZ",
+    precision: 2,
   },
 };
 
 /**
  * Formats a number into a currency string
  * @param {number} value - The number to format
- * @param {string} currencyType - The currency type ('KRW' or 'USD')
  * @returns {string} Formatted currency string
  */
-export const currencyFormat = (value, currencyType = "USD") => {
+export const currencyFormat = (value) => {
   const number = value !== undefined ? value : 0;
-  const currency = CURRENCY_TYPES[currencyType];
-
-  // Convert KRW to USD
-  const convertedValue = currencyType === "USD" ? number / 1200 : number;
+  const currency = CURRENCY_TYPES.NZD;
 
   return new Intl.NumberFormat(currency.locale, {
     style: "currency",
-    currency: currencyType,
+    currency: "NZD",
     minimumFractionDigits: currency.precision,
     maximumFractionDigits: currency.precision,
-  }).format(convertedValue);
-};
-
-export const wonFormat = (value) => {
-  return currencyFormat(value, "KRW");
+  }).format(number);
 };
 
 export const cc_expires_format = (string) => {

@@ -9,7 +9,6 @@ import {
   createProduct,
   editProduct,
 } from "../../../features/product/productSlice";
-import { currencyFormat } from "../../../utils/number";
 
 const InitialFormData = {
   name: "",
@@ -43,9 +42,6 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   }, [success, setShowDialog, dispatch]);
 
   useEffect(() => {
-    // if (error || !success) {
-    //   dispatch(clearError());
-    // }
     if (showDialog) {
       dispatch(clearError());
       if (mode === "edit") {
@@ -283,26 +279,14 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
         <Row className="mb-3">
           <Col md={4}>
             <Form.Group controlId="price">
-              <Form.Label>Price KRW to USD </Form.Label>
+              <Form.Label>Price (NZD)</Form.Label>
               <Form.Control
                 value={formData.price}
                 required
                 onChange={handleChange}
                 type="number"
-                placeholder="0"
-              />
-            </Form.Group>
-
-            <Form.Group className="mt-2">
-              <Form.Control
-                value={
-                  formData.price
-                    ? currencyFormat(formData.price, "USD").replace("$", "")
-                    : "0"
-                }
-                disabled
-                type="text"
-                className="bg-secondary bg-opacity-10 text-muted"
+                step="0.01"
+                placeholder="0.00"
               />
             </Form.Group>
           </Col>

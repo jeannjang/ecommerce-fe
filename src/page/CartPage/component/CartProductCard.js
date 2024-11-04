@@ -60,7 +60,7 @@ const CartProductCard = ({ item }) => {
               <h4 className="mb-0">{item.productId.name}</h4>
             </div>
             <div className="mb-1">
-              <strong>{currencyFormat(item.productId.price, "USD")}</strong>
+              <strong>{currencyFormat(item.productId.price)}</strong>
             </div>
             <div className="text-muted mb-1">Size: {item.size}</div>
             <div className="d-flex align-items-center gap-3">
@@ -91,7 +91,7 @@ const CartProductCard = ({ item }) => {
           </Col>
           <Col md={3} xs={12} className="text-md-end mt-3 mt-md-0">
             <div className="fw-bold">
-              Total: {currencyFormat(item.productId.price * item.qty, "USD")}
+              Total: {currencyFormat(item.productId.price * item.qty)}
             </div>
           </Col>
         </Row>
