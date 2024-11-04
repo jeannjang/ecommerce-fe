@@ -1,3 +1,5 @@
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Offcanvas, Navbar, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,14 +16,6 @@ const Sidebar = () => {
   const NavbarContent = () => {
     return (
       <div className="p-3">
-        <Link to="/" className="d-block mb-4">
-          <img
-            width={100}
-            src="/image/hm-logo.png"
-            alt="hm-logo"
-            className="img-fluid"
-          />
-        </Link>
         <h6 className="text-uppercase mb-3">Admin Account</h6>
         <ul className="nav flex-column">
           <li className="nav-item">
@@ -48,7 +42,16 @@ const Sidebar = () => {
   return (
     <Navbar bg="light" expand={false}>
       <Container fluid>
-        <Navbar.Toggle onClick={() => setShow(true)} />
+        <div className="col-auto">
+          {" "}
+          {/* Navbar와 동일한 클래스 사용 */}
+          <FontAwesomeIcon
+            icon={faBars}
+            onClick={() => setShow(true)}
+            className="cursor-pointer text-dark"
+            style={{ fontSize: "1.2rem" }}
+          />
+        </div>
         <Link to="/">
           <img
             width={80}
