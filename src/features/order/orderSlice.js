@@ -11,14 +11,14 @@ export const createOrder = createAsyncThunk(
         ...orderData,
         items: orderData.orderList.map((item) => ({
           ...item,
-          quantity: item.qty, // qty를 quantity로 변환
+          quantity: item.qty,
         })),
       });
 
       if (response.data.status === "success") {
         dispatch(
           showToastMessage({
-            message: "주문이 완료되었습니다!",
+            message: "Your order has been completed!",
             status: "success",
           })
         );
@@ -31,7 +31,8 @@ export const createOrder = createAsyncThunk(
     } catch (error) {
       dispatch(
         showToastMessage({
-          message: error.message || "주문 처리 중 오류가 발생했습니다.",
+          message:
+            error.message || "An error occurred while processing your order.",
           status: "error",
         })
       );

@@ -43,13 +43,11 @@ const OrderReceipt = () => {
       )}
 
       <div className="small text-muted mt-3">
-        <p>가능한 결제 수단</p>
+        {/* <p>가능한 결제 수단</p> */}
+        <p>Pricing and shipping costs are finalized during checkout.</p>
         <p>
-          귀하가 결제 단계에 도달할 때까지 가격 및 배송료는 확인되지 않습니다.
-        </p>
-        <p>
-          30일의 반품 가능 기간, 반품 수수료 및 미수취시 발생하는 추가 배송 요금
-          안내
+          Our 30-day return policy applies. Return shipping fees and unclaimed
+          package charges may apply.
         </p>
       </div>
     </div>

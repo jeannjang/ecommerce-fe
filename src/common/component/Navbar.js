@@ -19,18 +19,7 @@ const Navbar = () => {
     (state) => state.user
   );
   const { cartItemCount } = useSelector((state) => state.cart);
-  const isMobile = window.navigator.userAgent.indexOf("Mobile") !== -1;
-  const [showSearchBox, setShowSearchBox] = useState(false);
-  const menuList = [
-    "여성",
-    "Divided",
-    "남성",
-    "신생아/유아",
-    "아동",
-    "H&M HOME",
-    "Sale",
-    "지속가능성",
-  ];
+  const menuList = ["WOMAN", "MAN", "KIDS", "NEW", "ON SALE", "VIEW ALL"];
   let [width, setWidth] = useState(0);
   let navigate = useNavigate();
   const onCheckEnter = (event) => {
@@ -44,118 +33,138 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logoutUser());
   };
+
   return (
-    <div>
-      {showSearchBox && (
-        <div className="display-space-between mobile-search-box w-100">
-          <div className="search display-space-between w-100">
-            <div>
-              <FontAwesomeIcon className="search-icon" icon={faSearch} />
+    <div className="container-fluid">
+      {/* 사이드 메뉴 추가 */}
+      <div
+        className="side-menu shadow"
+        style={{
+          width,
+          transform: `translateX(${width === 0 ? "-100%" : "0"})`,
+        }}
+      >
+        <button
+          className="position-absolute top-0 end-0 btn border-0 p-3"
+          onClick={() => setWidth(0)}
+        >
+          &times;
+        </button>
+        <div className="d-flex flex-column p-3">
+          {menuList.map((menu, index) => (
+            <button
+              key={index}
+              className="btn text-start border-0 py-2"
+              onClick={() => {
+                setWidth(0);
+              }}
+            >
+              {menu}
+            </button>
+          ))}
+        </div>
+      </div>
+      {/* 최상단 Admin 링크 */}
+      {user && user.level === "admin" && (
+        <div className="text-end py-2">
+          <Link
+            to="/admin/product?page=1"
+            className="text-dark text-decoration-underline"
+          >
+            ADMIN PAGE
+          </Link>
+        </div>
+      )}
+
+      {/* 메인 네비게이션 바 */}
+      <div className="row align-items-center py-3">
+        {/* 왼쪽: 햄버거 메뉴 (모바일) */}
+        <div className="col-auto d-md-none">
+          <FontAwesomeIcon
+            icon={faBars}
+            onClick={() => setWidth(250)}
+            className="cursor-pointer"
+          />
+        </div>
+
+        {/* 중앙: 검색창 */}
+        <div className="col d-flex justify-content-center">
+          <div className="search-input-container">
+            <div className="input-group">
+              <span className="input-group-text border-0 bg-transparent">
+                <FontAwesomeIcon icon={faSearch} />
+              </span>
               <input
                 type="text"
+                className="form-control border-0 bg-transparent"
                 placeholder="Search..."
                 onKeyPress={onCheckEnter}
               />
             </div>
-            <button
-              className="closebtn"
-              onClick={() => setShowSearchBox(false)}
-            >
-              &times;
-            </button>
           </div>
         </div>
-      )}
-      <div className="side-menu" style={{ width: width }}>
-        <button className="closebtn" onClick={() => setWidth(0)}>
-          &times;
-        </button>
 
-        <div className="side-menu-list" id="menu-list">
-          {menuList.map((menu, index) => (
-            <button key={index}>{menu}</button>
-          ))}
-        </div>
-      </div>
-      {user && user.level === "admin" && (
-        <Link
-          to="/admin/product?page=1"
-          className="text-black text-decoration-underline link-area"
-        >
-          ADMIN PAGE
-        </Link>
-      )}
-      <div className="nav-header">
-        <div className="burger-menu hide">
-          <FontAwesomeIcon icon={faBars} onClick={() => setWidth(250)} />
-        </div>
-
-        <div>
-          <div className="display-flex">
+        {/* 오른쪽: 유저 메뉴 */}
+        <div className="col-auto">
+          <div className="d-flex align-items-center gap-4">
             {userSliceLoading ? (
               <Spinner animation="border" size="sm" />
-            ) : user ? (
-              <div onClick={handleLogout} className="nav-icon">
-                <FontAwesomeIcon icon={faUser} />
-                {!isMobile && (
-                  <span style={{ cursor: "pointer" }}>SIGN OUT</span>
-                )}
-              </div>
             ) : (
-              <div onClick={() => navigate("/login")} className="nav-icon">
-                <FontAwesomeIcon icon={faUser} />
-                {!isMobile && (
-                  <span style={{ cursor: "pointer" }}>SIGN IN</span>
-                )}
-              </div>
-            )}
-            <div onClick={() => navigate("/cart")} className="nav-icon">
-              <FontAwesomeIcon icon={faShoppingBag} />
-              {!isMobile && (
-                <span style={{ cursor: "pointer" }}>{`CART(${
-                  cartItemCount || 0
-                })`}</span>
-              )}
-            </div>
-            <div
-              onClick={() => navigate("/account/purchase")}
-              className="nav-icon"
-            >
-              <FontAwesomeIcon icon={faBox} />
-              {!isMobile && <span style={{ cursor: "pointer" }}>ORDER</span>}
-            </div>
-            {isMobile && (
-              <div className="nav-icon" onClick={() => setShowSearchBox(true)}>
-                <FontAwesomeIcon icon={faSearch} />
-              </div>
+              <>
+                <div
+                  onClick={user ? handleLogout : () => navigate("/login")}
+                  className="d-flex align-items-center cursor-pointer"
+                >
+                  <FontAwesomeIcon icon={faUser} />
+                  <span className="ms-2 d-none d-md-inline">
+                    {user ? "SIGN OUT" : "SIGN IN"}
+                  </span>
+                </div>
+                <div
+                  onClick={() => navigate("/cart")}
+                  className="d-flex align-items-center cursor-pointer"
+                >
+                  <FontAwesomeIcon icon={faShoppingBag} />
+                  <span className="ms-2 d-none d-md-inline">
+                    CART({cartItemCount || 0})
+                  </span>
+                </div>
+                <div
+                  onClick={() => navigate("/account/purchase")}
+                  className="d-flex align-items-center cursor-pointer"
+                >
+                  <FontAwesomeIcon icon={faBox} />
+                  <span className="ms-2 d-none d-md-inline">ORDER</span>
+                </div>
+              </>
             )}
           </div>
         </div>
       </div>
 
-      <div className="nav-logo">
+      {/* 로고 */}
+      <div className="text-center py-3">
         <Link to="/">
-          <img width={100} src="/image/hm-logo.png" alt="hm-logo.png" />
+          <img
+            width={100}
+            src="/image/hm-logo.png"
+            alt="hm-logo"
+            className="img-fluid"
+          />
         </Link>
       </div>
-      <div className="nav-menu-area">
-        <ul className="menu">
+
+      {/* 카테고리 메뉴 */}
+      <div>
+        <ul className="nav justify-content-center py-2">
           {menuList.map((menu, index) => (
-            <li key={index}>
-              <a href="#">{menu}</a>
+            <li key={index} className="nav-item">
+              <a className="nav-link text-dark" href="#">
+                {menu}
+              </a>
             </li>
           ))}
         </ul>
-        {!isMobile && ( // admin페이지에서 같은 search-box스타일을 쓰고있음 그래서 landing-search-box로 변경
-          <div className="search-box landing-search-box ">
-            <FontAwesomeIcon icon={faSearch} />
-            <input
-              type="text"
-              placeholder="Search..."
-              onKeyPress={onCheckEnter}
-            />
-          </div>
-        )}
       </div>
     </div>
   );

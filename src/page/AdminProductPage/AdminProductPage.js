@@ -92,7 +92,7 @@ const AdminProductPage = () => {
   return (
     <div className="locate-center">
       <Container>
-        <div className="mt-2">
+        <div className="mt-2 ">
           <SearchBox
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
