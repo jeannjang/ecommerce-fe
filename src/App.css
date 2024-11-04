@@ -86,3 +86,8 @@ body {
 .cursor-pointer {
   cursor: pointer;
 }
+.badge {
+  font-size: 12px;
+  min-width: 18px;
+  padding: 3px;
+}

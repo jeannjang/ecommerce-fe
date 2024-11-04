@@ -116,25 +116,28 @@ const Navbar = () => {
                   className="d-flex align-items-center cursor-pointer"
                 >
                   <FontAwesomeIcon icon={faUser} />
-                  <span className="ms-2 d-none d-md-inline">
+                  <span className="ms-1 mt-1 d-none d-md-inline small">
                     {user ? "SIGN OUT" : "SIGN IN"}
                   </span>
                 </div>
                 <div
                   onClick={() => navigate("/cart")}
-                  className="d-flex align-items-center cursor-pointer"
+                  className="d-flex align-items-center cursor-pointer position-relative"
                 >
                   <FontAwesomeIcon icon={faShoppingBag} />
-                  <span className="ms-2 d-none d-md-inline">
-                    CART({cartItemCount || 0})
-                  </span>
+                  {cartItemCount > 0 && (
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      {cartItemCount}
+                      <span className="visually-hidden">items in cart</span>
+                    </span>
+                  )}
                 </div>
                 <div
                   onClick={() => navigate("/account/purchase")}
                   className="d-flex align-items-center cursor-pointer"
                 >
                   <FontAwesomeIcon icon={faBox} />
-                  <span className="ms-2 d-none d-md-inline">ORDER</span>
+                  <span className="visually-hidden">MY ORDER</span>
                 </div>
               </>
             )}
