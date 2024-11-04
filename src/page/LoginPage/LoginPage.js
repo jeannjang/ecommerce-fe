@@ -87,12 +87,7 @@ const Login = () => {
             <p>-Sign in with social accounts-</p>
             <div className="display-center">
               <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-                <GoogleLogin
-                  onSuccess={handleGoogleLogin}
-                  onError={() => {
-                    console.log("Login Failed");
-                  }}
-                />
+                <GoogleLogin onSuccess={handleGoogleLogin} onError={() => {}} />
               </GoogleOAuthProvider>
             </div>
           </div>

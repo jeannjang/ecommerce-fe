@@ -32,8 +32,6 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   const [stockError, setStockError] = useState(false);
   const dispatch = useDispatch();
 
-  console.log("stock", stock);
-
   useEffect(() => {
     if (success === true) {
       setShowDialog(false);
