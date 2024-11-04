@@ -76,6 +76,14 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const logoutUser = createAsyncThunk(
+  "user/logoutUser",
+  async (_, { dispatch }) => {
+    sessionStorage.removeItem("authToken");
+    dispatch(initialCart());
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -89,11 +97,6 @@ const userSlice = createSlice({
     clearErrors: (state) => {
       state.loginError = null;
       state.registrationError = null;
-    },
-    logoutUser: (state) => {
-      sessionStorage.removeItem("authToken");
-      state.user = null;
-      state.loading = false;
     },
   },
   extraReducers: (builder) => {
@@ -130,8 +133,18 @@ const userSlice = createSlice({
       })
       .addCase(loginWithToken.rejected, (state) => {
         state.loading = false;
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.loading = false;
+        state.user = null;
+      })
+      .addCase(logoutUser.rejected, (state) => {
+        state.loading = false;
       });
   },
 });
-export const { clearErrors, logoutUser } = userSlice.actions;
+export const { clearErrors } = userSlice.actions;
 export default userSlice.reducer;
