@@ -45,11 +45,11 @@ body {
   width: 120px;
 }
 
-.side-menu .closebtn {
+.closebtn {
   position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
+  top: 5px;
+  right: 10px;
+  font-size: 24px;
   margin-left: 50px;
   border: none;
   background: none;
