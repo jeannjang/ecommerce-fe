@@ -7,27 +7,38 @@ import { updateOrder } from "../../../features/order/orderSlice";
 
 const OrderDetailDialog = ({ open, handleClose }) => {
   const selectedOrder = useSelector((state) => state.order.selectedOrder);
-  const [orderStatus, setOrderStatus] = useState(selectedOrder.status);
+  const [orderStatus, setOrderStatus] = useState(selectedOrder?.status);
   const dispatch = useDispatch();
 
   const handleStatusChange = (event) => {
     setOrderStatus(event.target.value);
   };
-  const submitStatus = () => {
-    dispatch(updateOrder({ id: selectedOrder._id, status: orderStatus }));
-    handleClose();
+
+  const submitStatus = (event) => {
+    event.preventDefault();
+    dispatch(
+      updateOrder({
+        id: selectedOrder._id,
+        status: orderStatus,
+      })
+    ).then((result) => {
+      if (!result.error) {
+        handleClose();
+      }
+    });
   };
 
   if (!selectedOrder) {
-    return <></>;
+    return null;
   }
+
   return (
     <Modal show={open} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Order Detail</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>예약번호: {selectedOrder.orderNum}</p>
+        <p>주문번호: {selectedOrder.orderNum}</p>
         <p>주문날짜: {selectedOrder.createdAt.slice(0, 10)}</p>
         <p>이메일: {selectedOrder.userId.email}</p>
         <p>주소: {selectedOrder.shipTo}</p>
@@ -45,19 +56,18 @@ const OrderDetailDialog = ({ open, handleClose }) => {
               </tr>
             </thead>
             <tbody>
-              {selectedOrder.items.length > 0 &&
-                selectedOrder.items.map((item) => (
-                  <tr key={item._id}>
-                    <td>{item._id}</td>
-                    <td>{item.productId.name}</td>
-                    <td>{currencyFormat(item.price)}</td>
-                    <td>{item.qty}</td>
-                    <td>{currencyFormat(item.price * item.qty)}</td>
-                  </tr>
-                ))}
+              {selectedOrder.items.map((item) => (
+                <tr key={item._id}>
+                  <td>{item._id}</td>
+                  <td>{item.productId.name}</td>
+                  <td>{currencyFormat(item.price, "USD")}</td>
+                  <td>{item.qty}</td>
+                  <td>{currencyFormat(item.price * item.qty, "USD")}</td>
+                </tr>
+              ))}
               <tr>
                 <td colSpan={4}>총계:</td>
-                <td>{currencyFormat(selectedOrder.totalPrice)}</td>
+                <td>{currencyFormat(selectedOrder.totalPrice, "USD")}</td>
               </tr>
             </tbody>
           </Table>

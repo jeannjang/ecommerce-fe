@@ -33,8 +33,10 @@ export const createOrder = createAsyncThunk(
         return response.data.orderNum;
       }
     } catch (error) {
-      // 재고 부족 등의 에러 메시지 처리
-      const errorMessage = error.message || "주문 처리 중 오류가 발생했습니다.";
+      // 백엔드 재고 부족관련 에러 메시지 ㅣㅣ그 외 에러 메시지 처리
+      const errorMessage =
+        error.message ||
+        "Sorry, we couldn't process your order right now. Please try again.";
 
       dispatch(
         showToastMessage({
@@ -74,7 +76,30 @@ export const getOrderList = createAsyncThunk(
 
 export const updateOrder = createAsyncThunk(
   "order/updateOrder",
-  async ({ id, status }, { dispatch, rejectWithValue }) => {}
+  async ({ id, status }, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await api.put(`/order/${id}`, { status });
+
+      if (response.data.status === "success") {
+        dispatch(
+          showToastMessage({
+            message: "Order status updated successfully",
+            status: "success",
+          })
+        );
+        return response.data.order;
+      }
+    } catch (error) {
+      dispatch(
+        showToastMessage({
+          message:
+            error.message || "Failed to update order status, please try again",
+          status: "error",
+        })
+      );
+      return rejectWithValue(error.message);
+    }
+  }
 );
 
 const orderSlice = createSlice({
@@ -124,6 +149,21 @@ const orderSlice = createSlice({
         state.totalPageNum = action.payload.totalPageNum;
       })
       .addCase(getOrderList.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateOrder.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateOrder.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        // 업데이트된 주문으로 리스트 업데이트
+        state.orderList = state.orderList.map((order) =>
+          order._id === action.payload._id ? action.payload : order
+        );
+      })
+      .addCase(updateOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
