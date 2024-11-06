@@ -12,10 +12,10 @@ const OrderCompletePage = () => {
   if (!orderNum) {
     return (
       <Container className="confirmation-page">
-        <h1>주문 실패</h1>
+        <h1>Order Unsuccessful.</h1>
         <div>
-          메인페이지로 돌아가세요
-          <Link to={"/"}>메인페이지로 돌아가기</Link>
+          Oops! Something went wrong. Please head back to the main page.
+          <Link to={"/"}>Back to Main Page</Link>
         </div>
       </Container>
     );
@@ -28,12 +28,12 @@ const OrderCompletePage = () => {
         className="check-image"
         alt="greenCheck.png"
       />
-      <h2>주문이 완료되었습니다!</h2>
-      <div>주문번호: {orderNum}</div>
+      <h2>Cheers! Your order is complete.</h2>
+      <div>Order Number: {orderNum}</div>
       <div>
-        주문확인은 내 주문 메뉴에서 확인해주세요
+        You can view your order details anytime under ‘My Orders' page.
         <div className="text-align-center">
-          <Link to={"/account/purchase"}>내 예약 바로가기</Link>
+          <Link to={"/account/purchase"}>Go to My Orders</Link>
         </div>
       </div>
     </Container>
