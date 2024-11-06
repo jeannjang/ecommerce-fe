@@ -43,6 +43,17 @@ const ProductDetail = () => {
       return;
     }
 
+    if (user.level === "admin") {
+      dispatch(
+        showToastMessage({
+          message:
+            "Admin cannot place orders. Please log in with a personal account.",
+          status: "warning",
+        })
+      );
+      return;
+    }
+
     dispatch(addToCart({ id, size }));
   };
 
@@ -110,7 +121,7 @@ const ProductDetail = () => {
             {sizeError && "Please select a size to proceed"}
           </div>
           <Button variant="dark" className="add-button" onClick={addItemToCart}>
-            추가
+            ADD TO CART
           </Button>
         </Col>
       </Row>
