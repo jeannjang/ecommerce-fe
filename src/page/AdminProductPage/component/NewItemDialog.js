@@ -75,8 +75,8 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
       setStockError(true);
       return;
     }
-    const totalStock = stock.reduce((acc, [size, quantity]) => {
-      acc[size] = quantity;
+    const totalStock = stock.reduce((acc, [size, qty]) => {
+      acc[size] = qty;
       return acc;
     }, {});
 

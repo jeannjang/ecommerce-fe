@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,7 +12,7 @@ const PaymentPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { cartList, totalPrice } = useSelector((state) => state.cart);
-  const { loading, orderNum } = useSelector((state) => state.order);
+  const { loading } = useSelector((state) => state.order);
 
   const [cardValue, setCardValue] = useState({
     cvc: "",
@@ -31,29 +31,25 @@ const PaymentPage = () => {
     zip: "",
   });
 
-  // 주문번호가 생성되면 주문완료 페이지로 이동
-  useEffect(() => {
-    if (orderNum) {
-      navigate("/payment/success");
-    }
-  }, [orderNum, navigate]);
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const { firstName, lastName, contact, address, city, zip } = shipInfo;
     dispatch(
       createOrder({
-        totalPrice,
-        contact: `${firstName} ${lastName} ${contact}`, // 문자열로 연결
-        shipTo: `${address} ${city} ${zip}`,
-        orderList: cartList.map((item) => {
-          return {
-            productId: item.productId._id,
-            price: item.productId.price,
-            size: item.size,
-            qty: item.qty,
-          };
-        }),
+        navigate,
+        orderData: {
+          totalPrice,
+          contact: `${firstName} ${lastName} ${contact}`, // 문자열로 연결
+          shipTo: `${address} ${city} ${zip}`,
+          orderList: cartList.map((item) => {
+            return {
+              productId: item.productId._id,
+              price: item.productId.price,
+              size: item.size,
+              qty: item.qty,
+            };
+          }),
+        },
       })
     );
   };
