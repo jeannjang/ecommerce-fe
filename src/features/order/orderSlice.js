@@ -5,13 +5,13 @@ import { showToastMessage } from "../common/uiSlice";
 
 export const createOrder = createAsyncThunk(
   "order/createOrder",
-  async (orderData, { dispatch, rejectWithValue }) => {
+  async ({ navigate, orderData }, { dispatch, rejectWithValue }) => {
     try {
       const response = await api.post("/order", {
         ...orderData,
         items: orderData.orderList.map((item) => ({
           ...item,
-          quantity: item.qty,
+          qty: item.qty,
         })),
       });
 
@@ -24,19 +24,26 @@ export const createOrder = createAsyncThunk(
         );
 
         dispatch(initialCart());
-        dispatch(getCartQty());
+        // dispatch(getCartQty());
+
+        navigate("/payment/success", {
+          state: { orderNum: response.data.orderNum },
+        });
 
         return response.data.orderNum;
       }
     } catch (error) {
+      // 재고 부족 등의 에러 메시지 처리
+      const errorMessage = error.message || "주문 처리 중 오류가 발생했습니다.";
+
       dispatch(
         showToastMessage({
-          message:
-            error.message || "An error occurred while processing your order.",
+          message: errorMessage,
           status: "error",
         })
       );
-      return rejectWithValue(error.message);
+
+      return rejectWithValue(errorMessage);
     }
   }
 );
@@ -60,7 +67,6 @@ const orderSlice = createSlice({
   name: "order",
   initialState: {
     orderList: [],
-    orderNum: "",
     selectedOrder: {},
     error: "",
     loading: false,
@@ -70,28 +76,22 @@ const orderSlice = createSlice({
     setSelectedOrder: (state, action) => {
       state.selectedOrder = action.payload;
     },
-    clearOrderNum: (state) => {
-      state.orderNum = "";
-    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(createOrder.pending, (state) => {
         state.loading = true;
-        state.error = "";
       })
       .addCase(createOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.error = "";
-        state.orderNum = action.payload;
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        state.orderNum = "";
       });
   },
 });
 
-export const { setSelectedOrder, clearOrderNum } = orderSlice.actions;
+export const { setSelectedOrder } = orderSlice.actions;
 export default orderSlice.reducer;
