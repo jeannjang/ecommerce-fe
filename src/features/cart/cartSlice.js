@@ -194,5 +194,12 @@ const cartSlice = createSlice({
   },
 });
 
+export const hasInsufficientStock = (state) => {
+  return state.cart.cartList.some((item) => {
+    const currentStock = item.productId.stock[item.size] || 0;
+    return currentStock < item.qty;
+  });
+};
+
 export default cartSlice.reducer;
 export const { initialCart } = cartSlice.actions;

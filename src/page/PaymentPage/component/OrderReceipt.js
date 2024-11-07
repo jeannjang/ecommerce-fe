@@ -4,12 +4,14 @@ import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { currencyFormat } from "../../../utils/number";
+import { hasInsufficientStock } from "../../../features/cart/cartSlice";
 
 const OrderReceipt = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { cartList, totalPrice } = useSelector((state) => state.cart);
   const isCartPage = location.pathname.includes("/cart");
+  const hasStockIssue = useSelector(hasInsufficientStock);
 
   return (
     <div className="receipt-container">
@@ -37,8 +39,9 @@ const OrderReceipt = () => {
           variant="dark"
           className="payment-button"
           onClick={() => navigate("/payment")}
+          disabled={hasStockIssue}
         >
-          Proceed to Checkout
+          {hasStockIssue ? "Unable to Checkout" : "Proceed to Checkout"}
         </Button>
       )}
 
