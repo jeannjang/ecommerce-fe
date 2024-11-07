@@ -43,17 +43,6 @@ const ProductDetail = () => {
       return;
     }
 
-    if (user.level === "admin") {
-      dispatch(
-        showToastMessage({
-          message:
-            "Admin cannot place orders. Please log in with a personal account.",
-          status: "warning",
-        })
-      );
-      return;
-    }
-
     dispatch(addToCart({ id, size }));
   };
 
