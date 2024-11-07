@@ -69,7 +69,7 @@ const Navbar = () => {
         <div className="text-end py-2">
           <Link
             to="/admin/product?page=1"
-            className="text-dark text-decoration-underline"
+            className="text-dark small text-decoration-none"
           >
             ADMIN PAGE
           </Link>

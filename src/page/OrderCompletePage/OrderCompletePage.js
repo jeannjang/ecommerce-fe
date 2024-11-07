@@ -1,6 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBox } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import "../PaymentPage/style/paymentPage.style.css";
 import { useLocation } from "react-router";
@@ -28,12 +29,14 @@ const OrderCompletePage = () => {
         className="check-image"
         alt="greenCheck.png"
       />
-      <h2>Cheers! Your order is complete.</h2>
+      <h3>Cheers! Your order is complete.</h3>
       <div>Order Number: {orderNum}</div>
       <div>
         You can view your order details anytime under ‘My Orders' page.
         <div className="text-align-center">
-          <Link to={"/account/purchase"}>Go to My Orders</Link>
+          <Link to={"/account/purchase"} className="text-decoration-none">
+            Go to <FontAwesomeIcon icon={faBox} />
+          </Link>
         </div>
       </div>
     </Container>
