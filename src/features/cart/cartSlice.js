@@ -91,7 +91,7 @@ export const updateCartItemQty = createAsyncThunk(
 
 export const getCartQty = createAsyncThunk(
   "cart/getCartQty",
-  async (_, { rejectWithValue, dispatch }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await api.get("/cart");
       return response.data.cart?.items?.length || 0;

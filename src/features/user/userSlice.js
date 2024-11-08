@@ -39,7 +39,33 @@ export const loginWithToken = createAsyncThunk(
 
 export const loginWithGoogle = createAsyncThunk(
   "user/loginWithGoogle",
-  async (token, { rejectWithValue }) => {}
+  async (credential, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await api.post("/auth/google", {
+        credential,
+      });
+
+      const { token, user } = response.data;
+      sessionStorage.setItem("authToken", token);
+
+      dispatch(
+        showToastMessage({
+          message: "Successfully signed in with Google!",
+          status: "success",
+        })
+      );
+
+      return user;
+    } catch (error) {
+      dispatch(
+        showToastMessage({
+          message: error.message || "Failed to sign in with Google",
+          status: "error",
+        })
+      );
+      return rejectWithValue(error.message);
+    }
+  }
 );
 
 export const registerUser = createAsyncThunk(
@@ -124,6 +150,20 @@ const userSlice = createSlice({
         state.loading = false;
         state.loginError = action.payload;
       })
+      .addCase(loginWithGoogle.pending, (state) => {
+        state.loading = true;
+        state.loginError = null;
+      })
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.loginError = null;
+      })
+      .addCase(loginWithGoogle.rejected, (state, action) => {
+        state.loading = false;
+        state.loginError = action.payload;
+      })
+
       .addCase(loginWithToken.pending, (state) => {
         state.loading = true;
       })
