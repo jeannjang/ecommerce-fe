@@ -96,9 +96,8 @@ const LandingPage = () => {
             breakLabel="..."
             breakClassName="page-item"
             breakLinkClassName="page-link"
-            containerClassName="pagination"
+            containerClassName="pagination justify-content-center"
             activeClassName="active"
-            className="display-center list-style-none"
           />
         </div>
       )}

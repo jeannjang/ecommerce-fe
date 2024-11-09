@@ -124,17 +124,16 @@ const AdminProductPage = () => {
             previousLabel="< previous"
             renderOnZeroPageCount={null}
             pageClassName="page-item"
-            pageLinkClassName="page-link shadow-none"
+            pageLinkClassName="page-link"
             previousClassName="page-item"
-            previousLinkClassName="page-link shadow-none"
+            previousLinkClassName="page-link"
             nextClassName="page-item"
-            nextLinkClassName="page-link shadow-none"
+            nextLinkClassName="page-link"
             breakLabel="..."
             breakClassName="page-item"
-            breakLinkClassName="page-link shadow-none"
-            containerClassName="pagination"
+            breakLinkClassName="page-link"
+            containerClassName="pagination justify-content-center"
             activeClassName="active"
-            className="display-center list-style-none"
           />
         </div>
 

@@ -78,11 +78,11 @@ const PaymentPage = () => {
       <Row>
         <Col lg={7}>
           <div>
-            <h2 className="mb-2">배송 주소</h2>
+            <h2 className="mb-2">Shipping Address</h2>
             <Form onSubmit={handleSubmit}>
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="lastName">
-                  <Form.Label>성</Form.Label>
+                  <Form.Label>Last Name</Form.Label>
                   <Form.Control
                     type="text"
                     name="lastName"
@@ -92,7 +92,7 @@ const PaymentPage = () => {
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="firstName">
-                  <Form.Label>이름</Form.Label>
+                  <Form.Label>First Name</Form.Label>
                   <Form.Control
                     type="text"
                     name="firstName"
@@ -103,7 +103,7 @@ const PaymentPage = () => {
               </Row>
 
               <Form.Group className="mb-3">
-                <Form.Label>연락처</Form.Label>
+                <Form.Label>Contact</Form.Label>
                 <Form.Control
                   type="tel"
                   name="contact"
@@ -114,7 +114,7 @@ const PaymentPage = () => {
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>주소</Form.Label>
+                <Form.Label>Address</Form.Label>
                 <Form.Control
                   type="text"
                   name="address"
@@ -125,7 +125,7 @@ const PaymentPage = () => {
 
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridCity">
-                  <Form.Label>도시</Form.Label>
+                  <Form.Label>City</Form.Label>
                   <Form.Control
                     name="city"
                     onChange={handleFormChange}
@@ -134,7 +134,7 @@ const PaymentPage = () => {
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridZip">
-                  <Form.Label>우편번호</Form.Label>
+                  <Form.Label>ZIP Code</Form.Label>
                   <Form.Control
                     name="zip"
                     onChange={handleFormChange}
@@ -148,7 +148,7 @@ const PaymentPage = () => {
               </div>
 
               <div>
-                <h2 className="payment-title">결제 정보</h2>
+                <h2 className="payment-title">Payment Information</h2>
                 <PaymentForm
                   cardValue={cardValue}
                   handleInputFocus={handleInputFocus}
@@ -162,11 +162,7 @@ const PaymentPage = () => {
                 type="submit"
                 disabled={loading}
               >
-                {loading ? (
-                  <Spinner animation="border" size="sm" />
-                ) : (
-                  "결제하기"
-                )}
+                {loading ? <Spinner animation="border" size="sm" /> : "Pay Now"}
               </Button>
             </Form>
           </div>

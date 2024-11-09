@@ -1,5 +1,4 @@
 body {
-  font-family: sans-serif;
   background-color: white;
 }
 
@@ -106,4 +105,46 @@ body {
 /* 사이드바 메뉴 호버 효과 */
 .nav-item button:hover {
   background-color: #f8f9fa;
+}
+
+/* 미니멀한 버전 */
+.pagination {
+  gap: 2px;
+}
+
+.page-item .page-link {
+  color: #000;
+  background-color: transparent;
+  border: none;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  line-height: 1;
+  min-width: 28px;
+  text-align: center;
+}
+
+.page-item.active .page-link {
+  background-color: #000;
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* previous/next 버튼 스타일 */
+.page-item:first-child .page-link,
+.page-item:last-child .page-link {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* 호버 효과를 더 섬세하게 */
+.page-item .page-link:hover:not(.active) {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #000;
+}
+
+/* disabled 상태를 더 섬세하게 */
+.page-item.disabled .page-link {
+  opacity: 0.5;
+  color: #000;
 }

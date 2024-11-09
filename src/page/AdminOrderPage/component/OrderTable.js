@@ -25,7 +25,7 @@ const OrderTable = ({ header, data, openEditForm }) => {
                 {item.items.length > 0 ? (
                   <th>
                     {item.items[0].productId.name}
-                    {item.items.length > 1 && `외 ${item.items.length - 1}개`}
+                    {item.items.length > 1 && `with ${item.items.length - 1}개`}
                   </th>
                 ) : (
                   <th></th>
