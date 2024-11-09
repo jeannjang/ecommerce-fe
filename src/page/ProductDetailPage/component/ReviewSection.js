@@ -10,7 +10,7 @@ import "../style/productDetail.style.css";
 
 const ReviewSection = ({ productId }) => {
   const dispatch = useDispatch();
-  const { reviews, loading } = useSelector((state) => state.review);
+  const { reviews, loading, error } = useSelector((state) => state.review);
   const { user } = useSelector((state) => state.user);
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
@@ -22,10 +22,13 @@ const ReviewSection = ({ productId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createReview({ productId, rating, comment }));
-    setComment("");
-    setRating(5);
-    setShowForm(false);
+    dispatch(createReview({ productId, rating, comment }))
+      .unwrap() //
+      .then(() => {
+        setComment("");
+        setRating(5);
+        setShowForm(false);
+      });
   };
 
   const handleDelete = (reviewId) => {
@@ -52,6 +55,7 @@ const ReviewSection = ({ productId }) => {
 
   return (
     <div className="review-section">
+      {/* {error && <div className="alert alert-danger">{error}</div>} */}
       <div className="review-header">
         <h4>REVIEWS</h4>
         {user && !showForm && (
@@ -80,7 +84,7 @@ const ReviewSection = ({ productId }) => {
                 rows={3}
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                placeholder="Share your thoughts about this product..."
+                placeholder="Have you purchased this product? Share your thoughts..."
                 required
                 className="review-textarea"
               />

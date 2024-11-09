@@ -6,7 +6,7 @@ export const createReview = createAsyncThunk(
   "review/createReview",
   async ({ productId, rating, comment }, { dispatch, rejectWithValue }) => {
     try {
-      const response = await api.post(`/reviews/create/${productId}`, {
+      const response = await api.post(`/reviews/${productId}`, {
         rating,
         comment,
       });
@@ -22,7 +22,7 @@ export const createReview = createAsyncThunk(
     } catch (error) {
       dispatch(
         showToastMessage({
-          message: error.message || "Failed to submit review",
+          message: error.message,
           status: "error",
         })
       );
@@ -35,7 +35,7 @@ export const getProductReviews = createAsyncThunk(
   "review/getProductReviews",
   async (productId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/reviews/get/${productId}`);
+      const response = await api.get(`/reviews/${productId}`);
       return response.data.reviews;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -47,7 +47,7 @@ export const deleteReview = createAsyncThunk(
   "review/deleteReview",
   async (reviewId, { rejectWithValue }) => {
     try {
-      await api.delete(`/reviews/delete/${reviewId}`);
+      await api.delete(`/reviews/${reviewId}`);
       return reviewId;
     } catch (error) {
       return rejectWithValue(error.message);

@@ -21,7 +21,7 @@ const CartProductCard = ({ item }) => {
   useEffect(() => {
     if (currentStock < currentQty) {
       setStockWarning(true);
-      // Optionally auto-adjust the quantity to max available
+      // Optionally 자동으로 재고 수량조정과 카트 업데이트 로직 추가할때 사용
       // setCurrentQty(currentStock);
     } else {
       setStockWarning(false);
