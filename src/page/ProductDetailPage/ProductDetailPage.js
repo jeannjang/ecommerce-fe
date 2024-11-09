@@ -14,6 +14,7 @@ import "./style/productDetail.style.css";
 import { getProductDetail } from "../../features/product/productSlice";
 import { addToCart } from "../../features/cart/cartSlice";
 import { showToastMessage } from "../../features/common/uiSlice";
+import ReviewSection from "./component/ReviewSection";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
@@ -114,6 +115,7 @@ const ProductDetail = () => {
           </Button>
         </Col>
       </Row>
+      <ReviewSection productId={id} />
     </Container>
   );
 };
