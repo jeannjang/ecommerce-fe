@@ -24,6 +24,8 @@ api.interceptors.request.use(
   }
 );
 
+//뉴스앱 Beare 중복 적힘 수정
+
 api.interceptors.response.use(
   (response) => {
     console.log("Response:", response);
