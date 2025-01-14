@@ -90,7 +90,7 @@ const CartProductCard = ({ item }) => {
               </button>
             </div>
             <div className="mb-1">
-              <strong>{currencyFormat(item.productId.price, "USD")}</strong>
+              <strong>{currencyFormat(item.productId.price, "NZD")}</strong>
             </div>
             <div className="text-muted mb-1">Size: {item.size}</div>
 
@@ -127,7 +127,7 @@ const CartProductCard = ({ item }) => {
           </Col>
           <Col md={3} xs={12} className="text-md-end mt-3 mt-md-0">
             <div className="fw-bold">
-              Total: {currencyFormat(item.productId.price * currentQty, "USD")}
+              Total: {currencyFormat(item.productId.price * currentQty, "NZD")}
             </div>
           </Col>
         </Row>

@@ -31,6 +31,8 @@ const OrderDetailDialog = ({ open, handleClose }) => {
   if (!selectedOrder) {
     return null;
   }
+  const userEmail =
+    selectedOrder.userId?.email || "This account has been deleted";
 
   return (
     <Modal show={open} onHide={handleClose}>
@@ -40,7 +42,7 @@ const OrderDetailDialog = ({ open, handleClose }) => {
       <Modal.Body>
         <p>Order Number: {selectedOrder.orderNum}</p>
         <p>Order Date: {selectedOrder.createdAt.slice(0, 10)}</p>
-        <p>Email: {selectedOrder.userId.email}</p>
+        <p>Email: {userEmail}</p>
         <p>Address: {selectedOrder.shipTo}</p>
         <p>Contact: {selectedOrder.contact}</p>
         <p>Order Details</p>
@@ -56,18 +58,18 @@ const OrderDetailDialog = ({ open, handleClose }) => {
               </tr>
             </thead>
             <tbody>
-              {selectedOrder.items.map((item) => (
+              {selectedOrder.items?.map((item) => (
                 <tr key={item._id}>
                   <td>{item._id}</td>
                   <td>{item.productId.name}</td>
-                  <td>{currencyFormat(item.price, "USD")}</td>
+                  <td>{currencyFormat(item.price, "NZD")}</td>
                   <td>{item.qty}</td>
-                  <td>{currencyFormat(item.price * item.qty, "USD")}</td>
+                  <td>{currencyFormat(item.price * item.qty, "NZD")}</td>
                 </tr>
               ))}
               <tr>
                 <td colSpan={4}>Total:</td>
-                <td>{currencyFormat(selectedOrder.totalPrice, "USD")}</td>
+                <td>{currencyFormat(selectedOrder.totalPrice, "NZD")}</td>
               </tr>
             </tbody>
           </Table>
