@@ -150,8 +150,8 @@ const Navbar = () => {
         <Link to="/">
           <img
             width={100}
-            src="/image/hm-logo.png"
-            alt="hm-logo"
+            src="/image/jara-logo.png"
+            alt="jara-logo"
             className="img-fluid"
           />
         </Link>

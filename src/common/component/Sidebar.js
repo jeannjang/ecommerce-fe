@@ -40,7 +40,7 @@ const Sidebar = () => {
   };
 
   return (
-    <Navbar bg="light" expand={false}>
+    <Navbar expand={false}>
       <Container fluid>
         <div className="col-auto">
           {" "}
@@ -54,9 +54,9 @@ const Sidebar = () => {
         </div>
         <Link to="/">
           <img
-            width={80}
-            src="/image/hm-logo.png"
-            alt="hm-logo"
+            width={100}
+            src="/image/jara-logo.png"
+            alt="jara-logo"
             className="img-fluid"
           />
         </Link>
