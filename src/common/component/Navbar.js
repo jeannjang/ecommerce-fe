@@ -19,7 +19,7 @@ const Navbar = () => {
     (state) => state.user
   );
   const { cartItemCount } = useSelector((state) => state.cart);
-  const menuList = ["WOMAN", "MAN", "KIDS", "NEW", "ON SALE", "VIEW ALL"];
+  const menuList = ["WOMAN", "MAN", "PERFUEMS", "NEW"];
   let [width, setWidth] = useState(0);
   let navigate = useNavigate();
   const onCheckEnter = (event) => {

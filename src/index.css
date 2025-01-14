@@ -15,13 +15,13 @@ body {
   letter-spacing: 0.02em;
 }
 
-/* 네비게이션 메뉴 스타일 */
+/* navigation menu */
 .nav-link {
   font-weight: 300;
   letter-spacing: 0.05em;
 }
 
-/* 헤딩 스타일 */
+/* head */
 h1,
 h2,
 h3,
@@ -33,7 +33,7 @@ h6 {
   letter-spacing: 0.03em;
 }
 
-/* 제품 이름 스타일 */
+/* product name */
 .product-info {
   font-family: var(--font-primary);
   font-weight: 300;
@@ -41,21 +41,16 @@ h6 {
   text-transform: uppercase;
 }
 
-/* 가격 스타일 */
+/* price style */
 .price {
   font-family: var(--font-primary);
   font-weight: 400;
 }
 
-/* 버튼 스타일 */
+/* button style */
 .btn {
   font-family: var(--font-primary);
   font-weight: 400;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
 }

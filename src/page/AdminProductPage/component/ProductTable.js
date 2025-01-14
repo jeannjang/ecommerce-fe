@@ -11,7 +11,7 @@ const ProductTable = ({
   searchQuery,
 }) => {
   return (
-    <div className="overflow-x">
+    <div className="overflow-x scroll-table">
       <Table striped bordered hover>
         <thead>
           <tr>

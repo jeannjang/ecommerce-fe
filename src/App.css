@@ -31,7 +31,7 @@ body {
   top: 0;
   left: 0;
   background-color: white;
-  overflow-x: hidden;
+  overflow-x: scroll;
   transition: all 0.3s ease;
   width: 200px;
   padding-top: 60px;
