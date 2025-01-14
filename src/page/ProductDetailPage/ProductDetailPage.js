@@ -25,8 +25,7 @@ const ProductDetail = () => {
   const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
 
-  // 사이즈 미선택시 에러메세지
-  // 카트에 아이템 추가
+  // Add item to cart
   const addItemToCart = () => {
     if (size === "") {
       setSizeError(true);
@@ -40,14 +39,13 @@ const ProductDetail = () => {
           status: "error",
         })
       );
-      navigate("/login", { state: { from: `/product/${id}` } }); // 현재페이지 URL을 state로 전달
+      navigate("/login", { state: { from: `/product/${id}` } }); // Pass current page URL
       return;
     }
 
     dispatch(addToCart({ id, size }));
   };
 
-  // 선택된 사이즈를 state에 저장
   const selectSize = (value) => {
     setSize(value);
     setSizeError("");
@@ -68,7 +66,11 @@ const ProductDetail = () => {
     <Container className="product-detail-card">
       <Row>
         <Col sm={6}>
-          <img src={selectedProduct.image} className="w-100" alt="image" />
+          <img
+            src={selectedProduct.image}
+            className="w-100"
+            alt={selectedProduct.name}
+          />
         </Col>
         <Col className="product-info-area" sm={6}>
           <div className="product-info">{selectedProduct.name}</div>

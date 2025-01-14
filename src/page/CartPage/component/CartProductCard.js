@@ -21,8 +21,6 @@ const CartProductCard = ({ item }) => {
   useEffect(() => {
     if (currentStock < currentQty) {
       setStockWarning(true);
-      // Optionally 자동으로 재고 수량조정과 카트 업데이트 로직 추가할때 사용
-      // setCurrentQty(currentStock);
     } else {
       setStockWarning(false);
     }
@@ -50,7 +48,7 @@ const CartProductCard = ({ item }) => {
   const getQuantityOptions = () => {
     const maxStock = currentStock;
     const options = [];
-    // 현재 선택된 수량이 재고보다 많은 경우에도 현재 수량을 포함
+    // Include current selected quantity when it exceeds available stock
     const maxQty = Math.max(currentQty, Math.min(maxStock, 10));
 
     for (let i = 1; i <= maxQty; i++) {
@@ -58,7 +56,7 @@ const CartProductCard = ({ item }) => {
         <option
           key={i}
           value={i}
-          disabled={i > maxStock} // 재고보다 큰 수량은 비활성화
+          disabled={i > maxStock} // Disable quantities that exceed available stock
         >
           {i} {i > maxStock ? "(Out of Stock)" : ""}
         </option>

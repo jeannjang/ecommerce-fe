@@ -36,7 +36,7 @@ const ProductTable = ({
                   ))}
                 </th>
                 <th>
-                  <img src={item.image} width={100} alt="image" />
+                  <img src={item.image} width={100} alt="product" />
                 </th>
                 <th>{item.status}</th>
                 <th style={{ minWidth: "100px" }}>

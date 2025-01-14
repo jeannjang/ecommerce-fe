@@ -10,7 +10,7 @@ import "../style/productDetail.style.css";
 
 const ReviewSection = ({ productId }) => {
   const dispatch = useDispatch();
-  const { reviews, loading, error } = useSelector((state) => state.review);
+  const { reviews, loading } = useSelector((state) => state.review);
   const { user } = useSelector((state) => state.user);
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
@@ -23,7 +23,7 @@ const ReviewSection = ({ productId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createReview({ productId, rating, comment }))
-      .unwrap() //
+      .unwrap()
       .then(() => {
         setComment("");
         setRating(5);

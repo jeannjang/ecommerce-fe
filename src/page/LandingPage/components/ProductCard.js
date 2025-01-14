@@ -9,7 +9,7 @@ const ProductCard = ({ item }) => {
   };
   return (
     <div className="card cursor-pointer" onClick={() => showProduct(item._id)}>
-      <img src={item?.image} alt={item?.image} />
+      <img src={item?.image} alt={item?.name} />
       <div>{item?.name}</div>
       <div>{currencyFormat(item.price)}</div>
     </div>

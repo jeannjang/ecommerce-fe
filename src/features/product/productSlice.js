@@ -121,7 +121,7 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = "";
         state.success = true;
-        state.productList.unshift(action.payload); // 추가 저장된 상품을 리덕스에서 바로 띄워주기 위해 프로덕트리스트에 추가
+        state.productList.unshift(action.payload); // Add newly saved product to the product list in Redux to display it immediately
       })
       .addCase(createProduct.rejected, (state, action) => {
         state.loading = false;
@@ -150,7 +150,7 @@ const productSlice = createSlice({
         state.success = true;
         state.productList = state.productList.map(
           (product) =>
-            product._id === action.payload._id ? action.payload : product // 수정된 상품을 리덕스에서 바로 띄워주기 위해 프로덕트리스트에 수정
+            product._id === action.payload._id ? action.payload : product // Update the product list in Redux with the modified product to display it immediately
         );
       })
       .addCase(editProduct.rejected, (state, action) => {
@@ -165,7 +165,7 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = "";
         state.productList = state.productList.filter(
-          (product) => product._id !== action.payload // 삭제된 상품을 리스트에서 제거
+          (product) => product._id !== action.payload // Remove the deleted product from the list
         );
       })
       .addCase(deleteProduct.rejected, (state, action) => {

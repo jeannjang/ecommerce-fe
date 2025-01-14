@@ -15,7 +15,7 @@ const LandingPage = () => {
     loading: productLoading,
     totalPageNum,
   } = useSelector(
-    // totalPageNum 추가
+    // Add totalPageNum to useSelector
     (state) => state.product
   );
   const [query] = useSearchParams();
@@ -32,10 +32,10 @@ const LandingPage = () => {
   }, [query]);
 
   useEffect(() => {
-    dispatch(getProductList(searchQuery)); // searchQuery로 변경
-  }, [searchQuery]);
+    dispatch(getProductList(searchQuery)); // Add searchQuery as a dependency
+  }, [dispatch, searchQuery]);
 
-  // URL 쿼리 업데이트를 위한 useEffect 추가
+  // Add useEffect to update URL query string when searchQuery changes
   useEffect(() => {
     if (searchQuery.name === "") {
       delete searchQuery.name;
@@ -43,7 +43,7 @@ const LandingPage = () => {
     const params = new URLSearchParams(searchQuery);
     const queryString = params.toString();
     navigate(`?${queryString}`);
-  }, [searchQuery]);
+  }, [navigate, searchQuery]);
 
   const handlePageClick = ({ selected }) => {
     setSearchQuery({ ...searchQuery, page: selected + 1 });

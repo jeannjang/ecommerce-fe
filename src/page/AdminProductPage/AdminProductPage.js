@@ -24,7 +24,7 @@ const AdminProductPage = () => {
   });
 
   const [mode, setMode] = useState("new");
-  // delete double check 모달을 위한 state 추가
+  // Add state for delete double-check modal
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteTargetId, setDeleteTargetId] = useState(null);
 
@@ -41,7 +41,7 @@ const AdminProductPage = () => {
 
   useEffect(() => {
     dispatch(getProductList(searchQuery));
-  }, [query]);
+  }, [dispatch, searchQuery]);
 
   useEffect(() => {
     if (searchQuery.name === "") {
@@ -50,41 +50,41 @@ const AdminProductPage = () => {
     const params = new URLSearchParams(searchQuery);
     const query = params.toString();
     navigate(`?${query}`);
-  }, [searchQuery]);
+  }, [navigate, searchQuery]);
 
-  // 기존 deleteItem을 handleDeleteClick으로 변경
+  // Change deleteItem to handleDeleteClick
   const handleDeleteClick = (id) => {
     setDeleteTargetId(id);
     setShowDeleteModal(true);
   };
 
-  // 실제 삭제 실행 함수 추가
+  // Add function to execute actual deletion
   const confirmDelete = () => {
     dispatch(deleteProduct(deleteTargetId));
     setShowDeleteModal(false);
     setDeleteTargetId(null);
   };
 
-  // 삭제 취소 함수 추가
+  // Add function to cancel deletion
   const cancelDelete = () => {
     setShowDeleteModal(false);
     setDeleteTargetId(null);
   };
 
-  // edit모드로 설정후 상품수정 모달오픈
+  // Set edit mode and open product modification modal
   const openEditForm = (product) => {
     setMode("edit");
     dispatch(setSelectedProduct(product));
     setShowDialog(true);
   };
 
-  // new모드 설정후 상품생성 모달오픈
+  // Set new mode and open product creation modal
   const handleClickNewItem = () => {
     setMode("new");
     setShowDialog(true);
   };
 
-  // 쿼리에 페이지값 바꿔주기
+  // Update page value in query
   const handlePageClick = ({ selected }) => {
     setSearchQuery({ ...searchQuery, page: selected + 1 });
   };
@@ -108,7 +108,7 @@ const AdminProductPage = () => {
           <ProductTable
             header={tableHeader}
             data={productList || []}
-            deleteItem={handleDeleteClick} // deleteItem을 handleDeleteClick으로 변경
+            deleteItem={handleDeleteClick} // Change deleteItem prop to handleDeleteClick
             openEditForm={openEditForm}
             searchQuery={searchQuery}
           />

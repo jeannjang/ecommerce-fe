@@ -15,7 +15,7 @@ export const addToCart = createAsyncThunk(
             status: "success",
           })
         );
-        return response.data.cartItemQty; // 성공 시에만 cartItemQty 반환한다
+        return response.data.cartItemQty;
       } else {
         throw new Error(response.data.message);
       }

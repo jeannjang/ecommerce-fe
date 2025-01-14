@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getCartQty, initialCart } from "../cart/cartSlice";
+import { initialCart } from "../cart/cartSlice";
 import api from "../../utils/api";
 import { showToastMessage } from "../common/uiSlice";
 
@@ -33,7 +33,7 @@ export const createOrder = createAsyncThunk(
         return response.data.orderNum;
       }
     } catch (error) {
-      // 백엔드 재고 부족관련 에러 메시지 ㅣㅣ그 외 에러 메시지 처리
+      // Handle backend stock shortage error messages and other error messages
       const errorMessage =
         error.message ||
         "Sorry, we couldn't process your order right now. Please try again.";
@@ -158,7 +158,7 @@ const orderSlice = createSlice({
       .addCase(updateOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.error = "";
-        // 업데이트된 주문으로 리스트 업데이트
+        // Update list with updated order
         state.orderList = state.orderList.map((order) =>
           order._id === action.payload._id ? action.payload : order
         );

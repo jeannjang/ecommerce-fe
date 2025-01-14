@@ -39,7 +39,7 @@ const PaymentPage = () => {
         navigate,
         orderData: {
           totalPrice,
-          contact: `${firstName} ${lastName} ${contact}`, // 문자열로 연결
+          contact: `${firstName} ${lastName} ${contact}`, // Combine all contact info into one string
           shipTo: `${address} ${city} ${zip}`,
           orderList: cartList.map((item) => {
             return {

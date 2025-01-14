@@ -44,7 +44,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
       dispatch(clearError());
       if (mode === "edit") {
         setFormData(selectedProduct);
-        // 객체형태로 온 stock을  다시 배열로 세팅해주기
+        // Convert stock received as an object back to an array
         const sizeArray = Object.keys(selectedProduct.stock).map((size) => [
           size,
           selectedProduct.stock[size],
@@ -55,10 +55,10 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
         setStock([]);
       }
     }
-  }, [showDialog, mode, selectedProduct]);
+  }, [dispatch, showDialog, mode, selectedProduct]);
 
+  //Reset everything and close dialog
   const handleClose = () => {
-    //모든걸 초기화 시킨 후 다이얼로그 닫기
     setShowDialog(false);
     setFormData({ ...InitialFormData });
     setStock([]);
@@ -67,9 +67,9 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // 재고를 입력했는지 확인, 아니면 에러메세지 띄우기
-    // 재고를 배열에서 객체로 바꿔주기 from [['M',2], ["S",10]] to {M:2, S:10}
-    // -> mode가 new면 createProduct, edit이면 editProduct
+    // Check if stock is entered, show error message if not
+    // Convert stock array to object from [['M',2], ["S",10]] to {M:2, S:10}
+    // -> If mode is 'new' call createProduct, if 'edit' call editProduct
 
     if (stock.length === 0) {
       setStockError(true);
@@ -89,8 +89,8 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
     }
   };
 
+  //Update formData with input value
   const handleChange = (event) => {
-    //input값을 formData에 넣어주기
     const { id, value } = event.target;
     setFormData({
       ...formData,
@@ -98,33 +98,33 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
     });
   };
 
+  //Add stock to array when adding inventory
   const addStock = () => {
-    //재고 추가시 배열에 추가
     setStock([...stock, []]);
   };
 
+  //Remove stock from array when deleting inventory
   const deleteStock = (idx) => {
-    //재고 삭제시 배열에서 삭제
     const newStock = stock.filter((item, index) => index !== idx);
     setStock(newStock);
   };
 
+  //Change stock size
   const handleSizeChange = (value, index) => {
-    //재고 사이즈 변환하기
     const newStock = [...stock];
     newStock[index][0] = value;
     setStock(newStock);
   };
 
+  //Change stock quantity
   const handleStockChange = (value, index) => {
-    //재고 수량 변환하기
     const newStock = [...stock];
     newStock[index][1] = value;
     setStock(newStock);
   };
 
+  //Select categories (multiple selection) and update formData
   const onHandleCategory = (event) => {
-    //카테고리 선택하기(다중선택) formData에 넣기
     if (formData.category.includes(event.target.value)) {
       const newCategory = formData.category.filter(
         (item) => item !== event.target.value
@@ -141,8 +141,8 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
     }
   };
 
+  //Upload image to cloudinary and update formData with image url
   const uploadImage = (url) => {
-    //이미지 업로드
     setFormData({
       ...formData,
       image: url,

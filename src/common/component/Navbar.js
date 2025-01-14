@@ -162,9 +162,9 @@ const Navbar = () => {
         <ul className="nav justify-content-center py-2">
           {menuList.map((menu, index) => (
             <li key={index} className="nav-item">
-              <a className="nav-link text-dark" href="#">
+              <button className="nav-link text-dark border-0 bg-transparent">
                 {menu}
-              </a>
+              </button>
             </li>
           ))}
         </ul>

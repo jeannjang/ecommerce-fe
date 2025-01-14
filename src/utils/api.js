@@ -2,7 +2,6 @@ import axios from "axios";
 
 const LOCAL_BACKEND =
   process.env.REACT_APP_LOCAL_BACKEND || "http://localhost:5010/api";
-// const PROD_BACKEND = process.env.REACT_APP_PROD_BACKEND;
 
 const api = axios.create({
   baseURL: LOCAL_BACKEND,
@@ -13,7 +12,6 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (request) => {
-    console.log("Starting Request", request);
     request.headers.authorization = `Bearer ${sessionStorage.getItem(
       "authToken"
     )}`;
@@ -24,11 +22,8 @@ api.interceptors.request.use(
   }
 );
 
-//뉴스앱 Beare 중복 적힘 수정
-
 api.interceptors.response.use(
   (response) => {
-    console.log("Response:", response);
     return response;
   },
   function (error) {

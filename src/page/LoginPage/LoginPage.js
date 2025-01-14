@@ -23,11 +23,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    // 컴포넌트 마운트시 에러 초기화
+    // Clear error message when component mounts
     dispatch(clearErrors());
   }, [dispatch]);
 
-  // location.state.from이 있으면 해당 URL로, 없으면 홈으로 이동
+  // If user exists and location.state.from exists, redirect to that URL, otherwise navigate to home
   if (user) {
     return <Navigate to={location.state?.from || "/"} replace />;
   }
