@@ -22,17 +22,20 @@ const LandingPage = () => {
   const [searchQuery, setSearchQuery] = useState({
     page: query.get("page") || 1,
     name: query.get("name") || "",
+    category: query.get("category") || "",
   });
 
   useEffect(() => {
     setSearchQuery({
       page: query.get("page") || 1,
       name: query.get("name") || "",
+      category: query.get("category") || "",
     });
   }, [query]);
 
   useEffect(() => {
     dispatch(getProductList(searchQuery)); // Add searchQuery as a dependency
+    console.log("Search query changed:", searchQuery);
   }, [dispatch, searchQuery]);
 
   // Add useEffect to update URL query string when searchQuery changes
@@ -62,7 +65,7 @@ const LandingPage = () => {
       <Row className="mb-5">
         {productList.length > 0 ? (
           productList.map((item) => (
-            <Col md={3} sm={12} key={item._id}>
+            <Col lg={3} md={4} xs={6} className="mb-4" key={item._id}>
               <ProductCard item={item} />
             </Col>
           ))
@@ -71,7 +74,10 @@ const LandingPage = () => {
             {searchQuery.name === "" ? (
               <h4>No products to show yet.</h4>
             ) : (
-              <h4>No items found matching "{searchQuery.name}"</h4>
+              <h4>
+                No items found matching "
+                {searchQuery.name || searchQuery.category}"
+              </h4>
             )}
           </div>
         )}

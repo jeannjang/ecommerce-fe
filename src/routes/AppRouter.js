@@ -7,7 +7,7 @@ import Login from "../page/LoginPage/LoginPage";
 import MyPage from "../page/MyPage/MyPage";
 import OrderCompletePage from "../page/OrderCompletePage/OrderCompletePage";
 import PaymentPage from "../page/PaymentPage/PaymentPage";
-import ProductAll from "../page/LandingPage/LandingPage";
+import LandingPage from "../page/LandingPage/LandingPage";
 import ProductDetail from "../page/ProductDetailPage/ProductDetailPage";
 import RegisterPage from "../page/RegisterPage/RegisterPage";
 import PrivateRoute from "./PrivateRoute";
@@ -15,7 +15,7 @@ import PrivateRoute from "./PrivateRoute";
 const AppRouter = () => {
   return (
     <Routes>
-      <Route path="/" element={<ProductAll />} />
+      <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/product/:id" element={<ProductDetail />} />

@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../features/user/userSlice";
 import { Spinner } from "react-bootstrap";
+import { CATEGORY } from "../../constants/product.constants";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -19,8 +20,8 @@ const Navbar = () => {
     (state) => state.user
   );
   const { cartItemCount } = useSelector((state) => state.cart);
-  const menuList = ["WOMAN", "MAN", "PERFUEMS", "NEW"];
-  let [width, setWidth] = useState(0);
+  const menuList = ["ALL", ...CATEGORY];
+  let [mobileSideBar, setMobileSideBar] = useState(0);
   let navigate = useNavigate();
   const onCheckEnter = (event) => {
     if (event.key === "Enter") {
@@ -34,19 +35,29 @@ const Navbar = () => {
     dispatch(logoutUser());
   };
 
+  const handleCategoryClick = (menu) => {
+    setMobileSideBar(0);
+
+    if (menu === "ALL") {
+      navigate("/");
+    } else {
+      navigate(`/?category=${menu}`);
+    }
+  };
+
   return (
     <div className="container-fluid">
-      {/* 사이드 메뉴 추가 */}
+      {/* sidebar menu */}
       <div
         className="side-menu shadow"
         style={{
-          width,
-          transform: `translateX(${width === 0 ? "-100%" : "0"})`,
+          mobileSideBar,
+          transform: `translateX(${mobileSideBar === 0 ? "-100%" : "0"})`,
         }}
       >
         <button
           className="position-absolute top-0 end-0 btn border-0 p-3"
-          onClick={() => setWidth(0)}
+          onClick={() => setMobileSideBar(0)}
         >
           &times;
         </button>
@@ -55,16 +66,14 @@ const Navbar = () => {
             <button
               key={index}
               className="btn text-start border-0 py-2"
-              onClick={() => {
-                setWidth(0);
-              }}
+              onClick={() => handleCategoryClick(menu)}
             >
-              {menu}
+              {menu.toUpperCase()}
             </button>
           ))}
         </div>
       </div>
-      {/* 최상단 Admin 링크 */}
+      {/* Top: Admin page link */}
       {user && user.level === "admin" && (
         <div className="text-end py-2">
           <Link
@@ -76,18 +85,18 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* 메인 네비게이션 바 */}
+      {/* main navigation bar */}
       <div className="row align-items-center py-3">
-        {/* 왼쪽: 햄버거 메뉴 (모바일) */}
+        {/* Left: hamberger sidebar menu for mobile */}
         <div className="col-auto d-md-none">
           <FontAwesomeIcon
             icon={faBars}
-            onClick={() => setWidth(250)}
+            onClick={() => setMobileSideBar(250)}
             className="cursor-pointer"
           />
         </div>
 
-        {/* 중앙: 검색창 */}
+        {/* center: Search bar */}
         <div className="col d-flex justify-content-center">
           <div className="search-input-container">
             <div className="input-group">
@@ -104,7 +113,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* 오른쪽: 유저 메뉴 */}
+        {/* Right: User menu */}
         <div className="col-auto">
           <div className="d-flex align-items-center gap-4">
             {userSliceLoading ? (
@@ -145,7 +154,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* 로고 */}
+      {/* Logo */}
       <div className="text-center py-3">
         <Link to="/">
           <img
@@ -157,13 +166,16 @@ const Navbar = () => {
         </Link>
       </div>
 
-      {/* 카테고리 메뉴 */}
+      {/* Category menu */}
       <div>
         <ul className="nav justify-content-center py-2">
           {menuList.map((menu, index) => (
             <li key={index} className="nav-item">
-              <button className="nav-link text-dark border-0 bg-transparent">
-                {menu}
+              <button
+                className="nav-link text-dark border-0 bg-transparent"
+                onClick={() => handleCategoryClick(menu)}
+              >
+                {menu.toUpperCase()}
               </button>
             </li>
           ))}
