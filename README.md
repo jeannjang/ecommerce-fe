@@ -1,6 +1,6 @@
 # JARA E-commerce Platform
 
-[Visit JARA E-commerce website on this link](https://ecommerce-fe-4gm.pages.dev)
+[Visit JARA E-commerce website on this link](https://ecommerce-fe-4gm.pages.dev)  
 This is a full-stack e-commerce web application built with the MERN stack as a practice project.  
 The project consists of two repositories:
 
