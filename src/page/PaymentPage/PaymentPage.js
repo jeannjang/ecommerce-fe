@@ -107,7 +107,6 @@ const PaymentPage = () => {
                 <Form.Control
                   type="tel"
                   name="contact"
-                  placeholder="010-xxxx-xxxx"
                   onChange={handleFormChange}
                   required
                 />
