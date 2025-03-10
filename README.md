@@ -8,7 +8,8 @@ The project consists of two repositories:
 - **Backend** – [View Backend Repository](https://github.com/jeannjang/jara-ecommerce-be)
 
 ## Quick Preview
-![blur_b](https://github.com/user-attachments/assets/f023e4cd-9d6f-4b9a-9093-beb355cd761b)
+![blur_c](https://github.com/user-attachments/assets/450d19ff-28be-4a8f-b0bf-0cb18f8b3530)
+
 
 ## Frontend Overview
 
