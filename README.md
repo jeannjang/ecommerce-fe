@@ -7,6 +7,9 @@ The project consists of two repositories:
 - **Frontend** – This repository
 - **Backend** – [View Backend Repository](https://github.com/jeannjang/jara-ecommerce-be)
 
+## Quick Preview
+![blur_b](https://github.com/user-attachments/assets/f023e4cd-9d6f-4b9a-9093-beb355cd761b)
+
 ## Frontend Overview
 
 This includes `user and admin` features, with `JWT and Google OAuth` authentication.  
