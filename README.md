@@ -5,7 +5,7 @@ This is a full-stack e-commerce web application built with the MERN stack as a p
 The project consists of two repositories:
 
 - **Frontend** – This repository
-- **Backend** – [View Backend Repository](https://github.com/jeannjang/ecommerce-be)
+- **Backend** – [View Backend Repository](https://github.com/jeannjang/jara-ecommerce-be)
 
 ## Frontend Overview
 
